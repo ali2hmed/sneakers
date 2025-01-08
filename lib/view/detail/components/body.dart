@@ -312,23 +312,24 @@ sizeTextAndCountry(width, height) {
   //Name And Price Text Components
   nameAndPrice() {
     return FadeAnimation(
-      delay: 1,
+      delay: 1.5,
       child: Row(
         children: [
           Text(
-            widget.model.model,
+            "${widget.model.name} ${widget.model.model}",
             style: TextStyle(
-              fontSize: 21,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: AppConstantsColor.darkTextColor,
+              color: Colors.black87,
             ),
           ),
           Expanded(child: Container()),
-          Text('${widget.model.price.toStringAsFixed(3)} IQD',
-              style: TextStyle(
-              fontSize: 21,
+          Text(
+            "\$${widget.model.price.toStringAsFixed(2)}",
+            style: TextStyle(
+              fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: AppConstantsColor.darkTextColor,
+              color: AppConstantsColor.materialButtonColor,
             ),
           ),
         ],
