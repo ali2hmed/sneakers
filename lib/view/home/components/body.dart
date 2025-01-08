@@ -22,11 +22,29 @@ class _BodyState extends State<Body> {
   int selectedIndexOfFeatured = 1;
   Map<int, bool> favoriteStatus = {};
   final dbHelper = DBHelper();
+  List<ShoeModel> filteredShoes = [];
 
   @override
   void initState() {
     super.initState();
     _loadFavoriteStatus();
+    // Initialize with all shoes
+    filteredShoes = List.from(availableShoes);
+  }
+
+  void _filterShoesByCategory(int index) {
+    setState(() {
+      selectedIndexOfCategory = index;
+      if (index == 0) {
+        // "All" category
+        filteredShoes = List.from(availableShoes);
+      } else {
+        final selectedBrand = categories[index];
+        filteredShoes = availableShoes
+            .where((shoe) => shoe.name.toUpperCase() == selectedBrand.toUpperCase())
+            .toList();
+      }
+    });
   }
 
   Future<void> _loadFavoriteStatus() async {
@@ -90,9 +108,7 @@ class _BodyState extends State<Body> {
               itemBuilder: (ctx, index) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      selectedIndexOfCategory = index;
-                    });
+                    _filterShoesByCategory(index);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -120,116 +136,146 @@ class _BodyState extends State<Body> {
     return Container(
       width: width,
       height: height / 2.4,
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: availableShoes.length,
-        itemBuilder: (ctx, index) {
-          ShoeModel model = availableShoes[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (ctx) => DetailScreen(
-                    model: model,
-                    isComeFromMoreSection: false,
-                  ),
-                ),
-              );
-            },
-            child: Container(
-              margin: EdgeInsets.all(15),
-              width: width / 1.9,
-              child: Stack(
+      child: filteredShoes.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: width / 1.81,
-                    decoration: BoxDecoration(
-                      color: model.modelColor,
-                      borderRadius: BorderRadius.circular(30),
+                  Icon(
+                    Icons.local_mall_outlined,
+                    size: 60,
+                    color: Colors.grey[400],
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'No shoes found',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[800],
                     ),
                   ),
-                  Positioned(
-                    left: 10,
-                    child: FadeAnimation(
-                      delay: 1,
-                      child: Row(
-                        children: [
-                          Text(model.name,
-                              style: AppThemes.homeProductName),
-                          SizedBox(
-                            width: 280,
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              favoriteStatus[model.id] ?? false
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: Colors.red,
-                            ),
-                            onPressed: () => _toggleFavorite(model.id),
-                          ),
-                        ],
+                  SizedBox(height: 10),
+                  Text(
+                    'Try selecting a different category',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView.builder(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemCount: filteredShoes.length,
+              itemBuilder: (ctx, index) {
+                ShoeModel model = filteredShoes[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => DetailScreen(
+                          model: model,
+                          isComeFromMoreSection: false,
+                        ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 45,
-                    left: 10,
-                    child: FadeAnimation(
-                      delay: 1.5,
-                      child: Text(model.model,
-                          style: AppThemes.homeProductModel),
-                    ),
-                  ),
-                  Positioned(
-                    top: 80,
-                    left: 10,
-                    child: FadeAnimation(
-                      delay: 2,
-                      child: Text("${model.price} IQD",
-                          style: AppThemes.homeProductPrice),
-                    ),
-                  ),
-                  Positioned(
-                    left: 40,
-                    top: 90,
-                    child: FadeAnimation(
-                      delay: 2,
-                      child: Hero(
-                        tag: model.imgAddress,
-                        child: RotationTransition(
-                          turns: AlwaysStoppedAnimation(-30 / 360),
-                          child: Container(
-                            width: 280,
-                            height: 260,
-                            child: Image(
-                              image: AssetImage(model.imgAddress),
+                    );
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(15),
+                    width: width / 1.9,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: width / 1.81,
+                          decoration: BoxDecoration(
+                            color: model.modelColor,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          child: FadeAnimation(
+                            delay: 1,
+                            child: Row(
+                              children: [
+                                Text(model.name,
+                                    style: AppThemes.homeProductName),
+                                SizedBox(
+                                  width: 280,
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    favoriteStatus[model.id] ?? false
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () => _toggleFavorite(model.id),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
+                        Positioned(
+                          top: 45,
+                          left: 10,
+                          child: FadeAnimation(
+                            delay: 1.5,
+                            child: Text(model.model,
+                                style: AppThemes.homeProductModel),
+                          ),
+                        ),
+                        Positioned(
+                          top: 80,
+                          left: 10,
+                          child: FadeAnimation(
+                            delay: 2,
+                            child: Text("${model.price} IQD",
+                                style: AppThemes.homeProductPrice),
+                          ),
+                        ),
+                        Positioned(
+                          left: 40,
+                          top: 90,
+                          child: FadeAnimation(
+                            delay: 2,
+                            child: Hero(
+                              tag: model.imgAddress,
+                              child: RotationTransition(
+                                turns: AlwaysStoppedAnimation(-30 / 360),
+                                child: Container(
+                                  width: 280,
+                                  height: 260,
+                                  child: Image(
+                                    image: AssetImage(model.imgAddress),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 10,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              CupertinoIcons.arrow_right_circle,
+                              color: Colors.white,
+                              size: 25,
+                            ),
+                          )
+                        )
+                      ],
                     ),
                   ),
-                  Positioned(
-                    bottom: 10,
-                    right: 10,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        CupertinoIcons.arrow_right_circle,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                    )
-                  )
-                ],
-              ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 

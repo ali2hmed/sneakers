@@ -99,6 +99,7 @@ final List<UserStatus> userStatus = [
 ];
 
 final List categories = [
+  'All',
   'Nike',
   'Adidas',
   'Jordan',
