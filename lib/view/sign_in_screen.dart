@@ -45,10 +45,10 @@ class SneakersSignInScreen extends StatelessWidget {
       fontWeight: fontWeight,
       color: textColor,
       shadows: const [
-        Shadow(offset: Offset(1, 1), color: Colors.white),
-        Shadow(offset: Offset(1, 1), color: Colors.white),
-        Shadow(offset: Offset(1, 1), color: Colors.white),
-        Shadow(offset: Offset(1, 1), color: Colors.white),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
       ],
     );
   }
