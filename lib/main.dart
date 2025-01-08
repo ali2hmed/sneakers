@@ -12,9 +12,6 @@ void main() async {
   final dbHelper = DBHelper();
   await dbHelper.database; // Ensure database is created
   
-  // Create a temporary user for testing if it doesn't exist
-  await dbHelper.insertUser('salam', 'salam@gmail.com', '8888');
-  
   runApp(MyApp());
 }
 
