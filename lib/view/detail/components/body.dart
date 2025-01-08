@@ -57,7 +57,6 @@ class Details extends State<DetailsBody> {
                   SizedBox(
                     height: 5,
                   ),
-                  
                   sizeTextAndCountry(width, height),
                   SizedBox(
                     height: 10,
@@ -184,6 +183,66 @@ class Details extends State<DetailsBody> {
     );
   }
 
+  // Size Button Widget Components
+  sizeButton(width, height) {
+    return FadeAnimation(
+      delay: 2.5,
+      child: Container(
+        width: width / 4.5,
+        height: height / 14,
+        child: MaterialButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(
+              color: _isSelectedSize == width ? Colors.transparent : Colors.grey,
+              width: 1,
+            ),
+          ),
+          color: _isSelectedSize == width
+              ? AppConstantsColor.materialButtonColor
+              : AppConstantsColor.backgroundColor,
+          onPressed: () {
+            setState(() {
+              _isSelectedSize = width;
+              widget.model.selectedSize = width / 10; // Convert width to shoe size
+            });
+          },
+          child: Text(
+            "${width / 10}",
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: _isSelectedSize == width
+                  ? AppConstantsColor.lightTextColor
+                  : AppConstantsColor.darkTextColor,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  //End Sizes And Button Widget Components
+  endSizesAndButton(width, height) {
+    return FadeAnimation(
+      delay: 3,
+      child: Container(
+        width: width,
+        height: height / 13,
+        child: ListView.builder(
+          itemCount: 8,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (ctx, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: sizeButton((index + 35) * 10, height),  // Sizes from 35 to 42
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   //MaterialButton Components
   materialButton(width, height) {
     return FadeAnimation(
@@ -194,103 +253,48 @@ class Details extends State<DetailsBody> {
         height: height / 15,
         color: AppConstantsColor.materialButtonColor,
         onPressed: () {
+          if (_isSelectedSize == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Please select a size'),
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.red,
+              ),
+            );
+            return;
+          }
           AppMethods.addToCart(widget.model, context);
         },
         child: Text(
           "ADD TO BAG",
-          style: TextStyle(color: AppConstantsColor.lightTextColor),
+          style: TextStyle(
+            color: AppConstantsColor.lightTextColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
   }
 
- // Define the list of sizes at the top of your widget or class
-final List<int> sizes = [40, 41, 42, 43, 44, 45]; // Six sizes from 40 to 45
-
-// end section Sizes And Button Components
-endSizesAndButton(width, height) {
-  return Container(
-    width: width,
-    height: height / 14,
-    child: FadeAnimation(
-      delay: 3,
+  // Size Text Components (Removed UK/USA Buttons)
+  sizeTextAndCountry(width, height) {
+    return FadeAnimation(
+      delay: 2.5,
       child: Row(
         children: [
-          // Try it button container (no changes needed here)
-        
-          SizedBox(
-            width: 1,
+          Text(
+            "Size",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppConstantsColor.darkTextColor,
+              fontSize: 22,
+            ),
           ),
-          // Updated ListView.builder to display six sizes
-          Container(
-            width: width / 1.03,
-            child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: sizes.length, // Use the length of sizes list
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (ctx, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _isSelectedSize = index;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(right: 5),
-                      width: width / 4.4,
-                      height: height / 13,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                            color: _isSelectedSize == index
-                                ? Colors.black
-                                : Colors.grey,
-                            width: 1.5),
-                        color: _isSelectedSize == index
-                            ? Colors.black
-                            : AppConstantsColor.backgroundColor,
-                      ),
-                      child: Center(
-                        child: Text(
-                          sizes[index].toString(), // Display each size
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: _isSelectedSize == index
-                                  ? Colors.white
-                                  : Colors.black),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          )
         ],
       ),
-    ),
-  );
-}
-
-
-// Size Text Components (Removed UK/USA Buttons)
-sizeTextAndCountry(width, height) {
-  return FadeAnimation(
-    delay: 2.5,
-    child: Row(
-      children: [
-        Text(
-          "Size",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppConstantsColor.darkTextColor,
-            fontSize: 22,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
+    );
+  }
 
   //more details Text Components
 

@@ -9,6 +9,7 @@ class ShoeModel {
   Color modelColor;
   String? description;
   String? category;
+  double? selectedSize;
 
   ShoeModel({
     required this.id,
@@ -19,6 +20,7 @@ class ShoeModel {
     required this.modelColor,
     this.description,
     this.category,
+    this.selectedSize,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class ShoeModel {
       'image': imgAddress,
       'description': description,
       'category': category,
+      'selectedSize': selectedSize,
     };
   }
 
@@ -40,9 +43,10 @@ class ShoeModel {
       model: map['model'],
       price: map['price'],
       imgAddress: map['image'],
-      modelColor: Colors.grey, // Default color since it's not stored in DB
+      modelColor: Colors.grey,
       description: map['description'],
       category: map['category'],
+      selectedSize: map['selectedSize']?.toDouble(),
     );
   }
 }

@@ -7,16 +7,35 @@ import '../models/models.dart';
 
 class AppMethods {
   AppMethods._();
+  
   static void addToCart(ShoeModel data, BuildContext context) {
+    if (data.selectedSize == null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please select a size before adding to cart'),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     bool contains = itemsOnBag.contains(data);
 
-    if (contains == true) {
+    if (contains) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(failedSnackBar());
     } else {
       itemsOnBag.add(data);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(successSnackBar());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Added to cart (Size: ${data.selectedSize})'),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.green,
+        ),
+      );
     }
   }
 
