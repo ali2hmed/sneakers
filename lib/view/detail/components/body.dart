@@ -21,7 +21,7 @@ class DetailsBody extends StatefulWidget {
 
 class Details extends State<DetailsBody> {
   bool _isSelectedCountry = false;
-  double? _isSelectedSize;
+  int? _isSelectedSize;
 
   @override
   Widget build(BuildContext context) {
@@ -184,35 +184,35 @@ class Details extends State<DetailsBody> {
   }
 
   // Size Button Widget Components
-  sizeButton(double size, height) {
+  sizeButton(width, height) {
     return FadeAnimation(
       delay: 2.5,
       child: Container(
-        width: 60,
+        width: width / 4.5,
         height: height / 14,
         child: MaterialButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(
-              color: _isSelectedSize == size ? Colors.transparent : Colors.grey,
+              color: _isSelectedSize == width ? Colors.transparent : Colors.grey,
               width: 1,
             ),
           ),
-          color: _isSelectedSize == size
+          color: _isSelectedSize == width
               ? AppConstantsColor.materialButtonColor
               : AppConstantsColor.backgroundColor,
           onPressed: () {
             setState(() {
-              _isSelectedSize = size;
-              widget.model.selectedSize = size;
+              _isSelectedSize = width;
+              widget.model.selectedSize = width / 10; // Convert width to shoe size
             });
           },
           child: Text(
-            size.toString(),
+            "${width / 10}",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: FontWeight.bold,
-              color: _isSelectedSize == size
+              color: _isSelectedSize == width
                   ? AppConstantsColor.lightTextColor
                   : AppConstantsColor.darkTextColor,
             ),
@@ -224,19 +224,18 @@ class Details extends State<DetailsBody> {
 
   //End Sizes And Button Widget Components
   endSizesAndButton(width, height) {
-    List<double> sizes = [35, 36, 37, 38, 39, 40, 41, 42];
     return FadeAnimation(
       delay: 3,
       child: Container(
         width: width,
         height: height / 13,
         child: ListView.builder(
-          itemCount: sizes.length,
+          itemCount: 8,
           scrollDirection: Axis.horizontal,
           itemBuilder: (ctx, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: sizeButton(sizes[index], height),
+              padding: const EdgeInsets.all(8.0),
+              child: sizeButton((index + 35) * 10, height),  // Sizes from 35 to 42
             );
           },
         ),
@@ -260,7 +259,6 @@ class Details extends State<DetailsBody> {
                 content: Text('Please select a size'),
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.red,
-                duration: Duration(seconds: 2),
               ),
             );
             return;

@@ -52,7 +52,6 @@ class _BagBodyState extends State<BagBody> {
                         background: Container(
                           alignment: Alignment.centerRight,
                           padding: EdgeInsets.only(right: 20),
-                          margin: EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
                             color: Colors.red[400],
                             borderRadius: BorderRadius.circular(15),
@@ -84,89 +83,76 @@ class _BagBodyState extends State<BagBody> {
                               ),
                             ],
                           ),
-                          child: Column(
+                          child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 120,
-                                    height: 120,
-                                    padding: EdgeInsets.all(16),
-                                    child: Hero(
-                                      tag: currentBagItem.imgAddress,
-                                      child: Image.asset(
-                                        currentBagItem.imgAddress,
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
+                              Container(
+                                width: 120,
+                                height: 120,
+                                padding: EdgeInsets.all(16),
+                                child: Hero(
+                                  tag: currentBagItem.imgAddress,
+                                  child: Image.asset(
+                                    currentBagItem.imgAddress,
+                                    fit: BoxFit.contain,
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        currentBagItem.name,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        currentBagItem.model,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Row(
                                         children: [
                                           Text(
-                                            currentBagItem.name,
+                                            '\$${currentBagItem.price.toStringAsFixed(2)}',
                                             style: TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
+                                              color: AppConstantsColor.materialButtonColor,
                                             ),
                                           ),
-                                          SizedBox(height: 8),
-                                          Text(
-                                            currentBagItem.model,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.grey[600],
+                                          SizedBox(width: 16),
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                              vertical: 4,
                                             ),
-                                          ),
-                                          SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '\$${currentBagItem.price.toStringAsFixed(2)}',
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppConstantsColor.materialButtonColor,
-                                                ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            child: Text(
+                                              'Size: ${currentBagItem.selectedSize?.toStringAsFixed(1)}',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black87,
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(15),
-                                    bottomRight: Radius.circular(15),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.straighten,
-                                      size: 20,
-                                      color: Colors.grey[600],
-                                    ),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      'Size: EU ${currentBagItem.selectedSize?.toStringAsFixed(1)}',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                  ],
                                 ),
                               ),
                             ],
