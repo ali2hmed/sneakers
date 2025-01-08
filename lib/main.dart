@@ -8,10 +8,12 @@ import 'view/sign_up_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize database and insert initial shoes data
+  // Initialize database
   final dbHelper = DBHelper();
   await dbHelper.database; // Ensure database is created
-  await dbHelper.insertInitialShoes();
+  
+  // Create a temporary user for testing if it doesn't exist
+  await dbHelper.insertUser('salam', 'salam@gmail.com', '8888');
   
   runApp(MyApp());
 }
