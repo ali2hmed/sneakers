@@ -197,27 +197,24 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                         Positioned(
+                          top: 10,
+                          right: 10, // Move the heart icon to the top-right corner
+                          child: IconButton(
+                            icon: Icon(
+                              favoriteStatus[model.id] ?? false
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                                color: Colors.red,
+                          ),
+                            onPressed: () => _toggleFavorite(model.id),
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
                           left: 10,
                           child: FadeAnimation(
                             delay: 1,
-                            child: Row(
-                              children: [
-                                Text(model.name,
-                                    style: AppThemes.homeProductName),
-                                SizedBox(
-                                  width: 280,
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    favoriteStatus[model.id] ?? false
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: Colors.red,
-                                  ),
-                                  onPressed: () => _toggleFavorite(model.id),
-                                ),
-                              ],
-                            ),
+                            child: Text(model.name, style: AppThemes.homeProductName),
                           ),
                         ),
                         Positioned(

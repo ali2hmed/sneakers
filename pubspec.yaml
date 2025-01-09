@@ -40,6 +40,21 @@ flutter:
     - assets/icons/apple.png
     - assets/icons/facebook.png
     - assets/icons/google.png
+    - assets/images/adidas_ultraboost22.png
+    - assets/images/adidas_nmd_r1.png
+    - assets/images/adidas_stan_smith.png
+    - assets/images/adidas_superstar.png
+    - assets/images/adidas_gazelle.png
+    - assets/images/gucci_rhyton.png
+    - assets/images/gucci_ace.png
+    - assets/images/puma_future_rider.png
+    - assets/images/puma_rsx.png
+    - assets/images/vans_old_skool.png
+    - assets/images/vans_sk8_hi.png
+    - assets/images/new_balance_574.png
+    - assets/images/new_balance_990v5.png
+    - assets/images/reebok_club_c_85.png
+    - assets/images/reebok_nano_x1.png
 
   fonts:
     - family: OpenSans
