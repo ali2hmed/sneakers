@@ -12,7 +12,7 @@ class Profile extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppConstantsColor.backgroundColor,
         appBar: customAppBarProfile(),
-        body: BodyProfile(),
+        body: const BodyProfile(),
       ),
       
     );

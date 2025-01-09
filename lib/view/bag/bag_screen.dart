@@ -3,6 +3,8 @@ import 'package:sneakers_app/utils/constants.dart';
 import 'package:sneakers_app/view/bag/components/body.dart';
 
 class MyBagScreen extends StatelessWidget {
+  const MyBagScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,7 +12,7 @@ class MyBagScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'My Cart',
           style: TextStyle(
             color: Colors.black,

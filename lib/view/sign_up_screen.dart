@@ -56,10 +56,10 @@ class SneakersSignUpScreen extends StatelessWidget {
       fontWeight: fontWeight,
       color: textColor,
       shadows: const [
-        Shadow(offset: Offset(1, 1), color: Colors.white),
-        Shadow(offset: Offset(1, 1), color: Colors.white),
-        Shadow(offset: Offset(1, 1), color: Colors.white),
-        Shadow(offset: Offset(1, 1), color: Colors.white),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
+        Shadow(offset: Offset(1, 1), color: Colors.black),
       ],
     );
   }
@@ -198,17 +198,23 @@ class SneakersSignUpScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.pushReplacementNamed(context, '/signIn');
                       },
-                      child: Text(
-                        'Sign In here',
-                        style: strokeTextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          textColor: Colors.black,
+                                child: const Text(
+                                  "Sign In here",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black, // Black text color
+                                    shadows: [
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: 50),
               ],
             ),

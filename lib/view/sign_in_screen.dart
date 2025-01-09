@@ -165,31 +165,38 @@ class SneakersSignInScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // Sign Up Link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: strokeTextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/signUp');
-                      },
-                      child: Text(
-                        "Sign Up here",
-                        style: strokeTextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          textColor: Colors.black,
+// Sign In Link
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Don't have an account? ",
+                                style: strokeTextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/signUp');
+                                },
+                                child: const Text(
+                                  "Sign Up here",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black, // Black text color
+                                    shadows: [
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: 50),
               ],
             ),

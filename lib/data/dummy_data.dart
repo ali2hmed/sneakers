@@ -65,7 +65,7 @@ final List<ShoeModel> availableShoes = [
     model: "ZOOM",
     price: 175000,
     imgAddress: "assets/images/nike7.png",
-    modelColor: const Color(0xff4D4D4),
+    modelColor: const Color(0x0ff4d4d4),
   ),
 ];
 

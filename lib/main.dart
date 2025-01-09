@@ -12,7 +12,7 @@ void main() async {
   final dbHelper = DBHelper();
   await dbHelper.database; // Ensure database is created
   
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

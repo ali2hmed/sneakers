@@ -9,12 +9,12 @@ PreferredSize? customAppBarDe(ctx) {
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: Text("Nike", style: AppThemes.detailsAppBar),
+      title: const Text("Nike", style: AppThemes.detailsAppBar),
       leading: IconButton(
         onPressed: () {
           Navigator.pop(ctx);
         },
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: AppConstantsColor.darkTextColor,
         ),
@@ -22,7 +22,7 @@ PreferredSize? customAppBarDe(ctx) {
       actions: [
         IconButton(
           onPressed: () {},
-          icon: Icon(Icons.favorite_border),
+          icon: const Icon(Icons.favorite_border),
         ),
       ],
     ),

@@ -24,20 +24,20 @@ class _BodyBagViewState extends State<BodyBagView>
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       width: width,
       height: height,
       child: Column(
         children: [
           topText(width, height),
-          Divider(
+          const Divider(
             color: Colors.grey,
           ),
           itemsOnBag.isEmpty
-              ? EmptyList()
+              ? const EmptyList()
               : Column(children: [
                   mainListView(width, height),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   bottomInfo(width, height),
@@ -49,7 +49,7 @@ class _BodyBagViewState extends State<BodyBagView>
 
   // Top Texts Components
   topText(width, height) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height / 14,
       child: FadeAnimation(
@@ -59,7 +59,7 @@ class _BodyBagViewState extends State<BodyBagView>
           children: [
             const Text("My Bag", style: AppThemes.bagTitle),
             Text(
-              "Total ${lengthsOfItemsOnBag} Items",
+              "Total $lengthsOfItemsOnBag Items",
               style: AppThemes.bagTotalPrice,
             ),
           ],
@@ -78,7 +78,7 @@ class _BodyBagViewState extends State<BodyBagView>
         height: height / 15,
         color: AppConstantsColor.materialButtonColor,
         onPressed: () {},
-        child: Text(
+        child: const Text(
           "NEXT",
           style: TextStyle(color: AppConstantsColor.lightTextColor),
         ),
@@ -88,11 +88,11 @@ class _BodyBagViewState extends State<BodyBagView>
 
   // Main ListView Components
   mainListView(width, height) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height / 1.6,
       child: ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
           itemCount: itemsOnBag.length,
           itemBuilder: (ctx, index) {
@@ -101,12 +101,12 @@ class _BodyBagViewState extends State<BodyBagView>
             return FadeAnimation(
               delay: 1.5 * index / 4,
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 1),
+                margin: const EdgeInsets.symmetric(vertical: 1),
                 width: width,
                 height: height / 5.2,
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: width / 2.8,
                       height: height / 5.7,
                       child: Stack(children: [
@@ -126,8 +126,8 @@ class _BodyBagViewState extends State<BodyBagView>
                             right: 90,
                             bottom: 15,
                             child: RotationTransition(
-                              turns: AlwaysStoppedAnimation(-40 / 360),
-                              child: Container(
+                              turns: const AlwaysStoppedAnimation(-40 / 360),
+                              child: SizedBox(
                                 width: 140,
                                 height: 140,
                                 child: Image(
@@ -147,12 +147,12 @@ class _BodyBagViewState extends State<BodyBagView>
                         children: [
                           Text(currentBagItem.model,
                               style: AppThemes.bagProductModel),
-                          SizedBox(
+                          const SizedBox(
                             height: 4,
                           ),
                           Text("${currentBagItem.price.toStringAsFixed(3)} IQD",
                               style: AppThemes.bagProductPrice),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
@@ -171,18 +171,18 @@ class _BodyBagViewState extends State<BodyBagView>
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.grey[300],
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                       child: Icon(
                                     Icons.remove,
                                     size: 15,
                                   )),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              Text("1", style: AppThemes.bagProductNumOfShoe),
-                              SizedBox(
+                              const Text("1", style: AppThemes.bagProductNumOfShoe),
+                              const SizedBox(
                                 width: 10,
                               ),
                               GestureDetector(
@@ -194,7 +194,7 @@ class _BodyBagViewState extends State<BodyBagView>
                                     borderRadius: BorderRadius.circular(10),
                                     color: Colors.grey[300],
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                       child: Icon(
                                     Icons.add,
                                     size: 15,
@@ -216,7 +216,7 @@ class _BodyBagViewState extends State<BodyBagView>
 
   bottomInfo(width, height) {
     return Container(
-      margin: EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.only(top: 10.0),
       width: width,
       height: height / 7,
       child: Column(
@@ -226,13 +226,13 @@ class _BodyBagViewState extends State<BodyBagView>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("TOTAL", style: AppThemes.bagTotalPrice),
+                const Text("TOTAL", style: AppThemes.bagTotalPrice),
                 Text("${AppMethods.sumOfItemsOnBag()} IQD",
                     style: AppThemes.bagSumOfItemOnBag),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           materialButton(width, height)
