@@ -329,7 +329,7 @@ class Details extends State<DetailsBody> {
           ),
           Expanded(child: Container()),
           Text(
-            "\$${widget.model.price.toStringAsFixed(2)}",
+            "${widget.model.price.toInt()} IQD",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

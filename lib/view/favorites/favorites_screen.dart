@@ -201,7 +201,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       ),
                                       SizedBox(height: 8),
                                       Text(
-                                        '\$${item['price'].toStringAsFixed(2)}',
+                                        '${item['price'].toInt()} IQD',
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,

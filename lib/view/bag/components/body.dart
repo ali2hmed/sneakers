@@ -198,7 +198,7 @@ class _BagBodyState extends State<BagBody> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  '\$${(item['price'] * item['quantity']).toStringAsFixed(2)}',
+                                                  '${(item['price'] * item['quantity']).toInt()} IQD',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
@@ -298,7 +298,7 @@ class _BagBodyState extends State<BagBody> {
                                     ),
                                   ),
                                   Text(
-                                    '\$${total.toStringAsFixed(2)}',
+                                    '${total.toInt()} IQD',
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,

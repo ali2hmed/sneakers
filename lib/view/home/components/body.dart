@@ -231,7 +231,7 @@ class _BodyState extends State<Body> {
                           left: 10,
                           child: FadeAnimation(
                             delay: 2,
-                            child: Text("${model.price} IQD",
+                            child: Text("${model.price.toInt()} IQD",
                                 style: AppThemes.homeProductPrice),
                           ),
                         ),
@@ -403,7 +403,7 @@ class _BodyState extends State<Body> {
                             height: height / 42,
                             child: FittedBox(
                               child: Text(
-                                "${model.price} IQD",
+                                "${model.price.toInt()} IQD",
                                 style: AppThemes.homeGridPrice
                               ),
                             ),
