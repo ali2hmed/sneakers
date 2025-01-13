@@ -16,8 +16,8 @@ dependencies:
     sdk: flutter
   sqflite: ^2.2.0
   path: ^1.8.2
-
-
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^9.2.0
   custom_navigation_bar: ^0.8.2
@@ -55,6 +55,14 @@ flutter:
     - assets/images/new_balance_990v5.png
     - assets/images/reebok_club_c_85.png
     - assets/images/reebok_nano_x1.png
+    - assets/images/nike1.png
+    - assets/images/nike2.png
+    - assets/images/nike3.png
+    - assets/images/nike4.png
+    - assets/images/nike5.png
+    - assets/images/nike6.png
+    - assets/images/nike7.png
+    - assets/images/nike8.png
 
   fonts:
     - family: OpenSans

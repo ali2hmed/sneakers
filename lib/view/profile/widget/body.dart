@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sneakers_app/theme/custom_app_theme.dart';
 import 'package:sneakers_app/db_helper.dart';
+import 'package:sneakers_app/providers/user_provider.dart';
 
 import '../../../../animation/fadeanimation.dart';
 import '../../../../models/models.dart';
@@ -26,12 +28,22 @@ class _BodyProfileState extends State<BodyProfile> {
   }
 
   Future<void> _loadUserData() async {
-    // TODO: Replace with actual logged-in user ID
-    final userProfile = await DBHelper().getUserProfile(1); // Using ID 1 for testing
-    setState(() {
-      userData = userProfile;
-      isLoading = false;
-    });
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    if (!userProvider.isLoggedIn) {
+      // Handle not logged in state
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    final userProfile = await DBHelper().getUserProfile(userProvider.userId!);
+    if (mounted) {
+      setState(() {
+        userData = userProfile;
+        isLoading = false;
+      });
+    }
   }
 
   @override

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../db_helper.dart';
+import '../providers/user_provider.dart';
 
 class SneakersSignInScreen extends StatelessWidget {
   SneakersSignInScreen({Key? key}) : super(key: key);
@@ -23,6 +25,10 @@ class SneakersSignInScreen extends StatelessWidget {
     final user = await _dbHelper.getUser(email, password);
 
     if (user != null) {
+      // Set the user in the provider
+      await Provider.of<UserProvider>(context, listen: false)
+          .setUser(user['id'], user['name']);
+          
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Welcome, ${user['name']}')),
       );
@@ -169,9 +175,10 @@ class SneakersSignInScreen extends StatelessWidget {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 "Don't have an account? ",
-                                style: strokeTextStyle(
+                                style: TextStyle(
+                                  color: Colors.grey,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -183,20 +190,14 @@ class SneakersSignInScreen extends StatelessWidget {
                                 child: const Text(
                                   "Sign Up here",
                                   style: TextStyle(
+                                    color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.black, // Black text color
-                                    shadows: [
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
                 const SizedBox(height: 50),
               ],
             ),
