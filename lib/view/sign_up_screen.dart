@@ -212,10 +212,10 @@ class SneakersSignUpScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                     color: Colors.black, // Black text color
                                     shadows: [
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
-                                    Shadow(offset: Offset(1, 1), color: Colors.white),
+                                    Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                    Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                    Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                    Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
                                   ],
                                 ),
                               ),

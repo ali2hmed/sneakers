@@ -175,10 +175,9 @@ class SneakersSignInScreen extends StatelessWidget {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
+                              Text(
                                 "Don't have an account? ",
-                                style: TextStyle(
-                                  color: Colors.grey,
+                                style: strokeTextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -187,17 +186,23 @@ class SneakersSignInScreen extends StatelessWidget {
                                 onTap: () {
                                   Navigator.pushNamed(context, '/signUp');
                                 },
-                                child: const Text(
-                                  "Sign Up here",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                            child: Text(
+                              "Sign Up here",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black, // Black text color
+                                shadows: const [
+                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
+                        ],
+                      ),
                 const SizedBox(height: 50),
               ],
             ),
