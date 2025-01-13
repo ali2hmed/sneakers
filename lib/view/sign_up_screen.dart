@@ -22,6 +22,13 @@ class SneakersSignUpScreen extends StatelessWidget {
       );
       return;
     }
+    
+    if (password.length < 8) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password should be at least 8 characters long')),
+      );
+      return;
+    } 
 
     if (password != confirmPassword) {
       ScaffoldMessenger.of(context).showSnackBar(
