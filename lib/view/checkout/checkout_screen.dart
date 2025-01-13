@@ -262,7 +262,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Subtotal'),
-                Text('\$${widget.totalAmount.toStringAsFixed(2)}'),
+                Text('${widget.totalAmount.toInt()} IQD'),
               ],
             ),
             const SizedBox(height: 8),
@@ -270,7 +270,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Delivery Fee'),
-                Text('\$5.00'),
+                Text('5000 IQD'),
               ],
             ),
             const Divider(height: 24),
@@ -285,7 +285,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ),
                 Text(
-                  '\$${(widget.totalAmount + 5.00).toStringAsFixed(2)}',
+                  '${(widget.totalAmount + 5000).toInt()} IQD',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -317,6 +317,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
+            color: Colors.black
           ),
         ),
       ),
@@ -358,7 +359,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           MaterialPageRoute(
             builder: (context) => OrderPlacedScreen(
               orderId: orderId,
-              totalAmount: widget.totalAmount + 5.00, // Including delivery fee
+              totalAmount: widget.totalAmount + 5000, // Including delivery fee
             ),
           ),
           (route) => false,

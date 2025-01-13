@@ -56,7 +56,7 @@ class OrderPlacedScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
+                  'Total Amount: ${totalAmount.toInt()} IQD',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -94,6 +94,7 @@ class OrderPlacedScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.black
                       ),
                     ),
                   ),
