@@ -4,6 +4,7 @@ import 'package:sneakers_app/models/shoe_model.dart';
 import 'package:sneakers_app/theme/custom_app_theme.dart';
 import 'package:sneakers_app/utils/constants.dart';
 import 'package:sneakers_app/view/detail/detail_screen.dart';
+import 'package:sneakers_app/view/checkout/checkout_screen.dart';
 
 class BagBody extends StatefulWidget {
   @override
@@ -56,6 +57,42 @@ class _BagBodyState extends State<BagBody> {
         );
       }
     }
+  }
+
+  Future<void> _removeFromCart(int cartId) async {
+    try {
+      await dbHelper.removeFromCart(cartId);
+      _loadCartItems(); // Reload cart items after removal
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error removing item: $e')),
+      );
+    }
+  }
+
+  Future<void> _updateQuantity(int cartId, int currentQuantity, bool increase) async {
+    try {
+      final newQuantity = increase ? currentQuantity + 1 : currentQuantity - 1;
+      if (newQuantity > 0) {
+        await dbHelper.updateCartItemQuantity(cartId, newQuantity);
+        _loadCartItems(); // Reload cart items after update
+      } else {
+        _removeFromCart(cartId);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error updating quantity: $e')),
+      );
+    }
+  }
+
+  void _navigateToCheckout() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutScreen(totalAmount: total),
+      ),
+    );
   }
 
   @override
@@ -309,9 +346,7 @@ class _BagBodyState extends State<BagBody> {
                               ),
                               SizedBox(height: 20),
                               MaterialButton(
-                                onPressed: () {
-                                  // TODO: Implement checkout
-                                },
+                                onPressed: _navigateToCheckout,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -334,37 +369,5 @@ class _BagBodyState extends State<BagBody> {
                   ],
                 ),
     );
-  }
-
-  Future<void> _updateQuantity(int cartId, int currentQuantity, bool increase) async {
-    try {
-      final newQuantity = increase ? currentQuantity + 1 : currentQuantity - 1;
-      if (newQuantity < 1) return;
-
-      await dbHelper.updateCartItemQuantity(cartId, newQuantity);
-      _loadCartItems(); // Reload cart to update total and quantities
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error updating quantity: $e')),
-      );
-    }
-  }
-
-  Future<void> _removeFromCart(int cartId) async {
-    try {
-      await dbHelper.removeFromCart(cartId);
-      _loadCartItems();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Item removed from cart'),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.black87,
-        ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error removing item: $e')),
-      );
-    }
   }
 }

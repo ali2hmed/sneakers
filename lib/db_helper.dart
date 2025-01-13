@@ -297,6 +297,15 @@ class DBHelper {
     return (result.first['total'] as num?)?.toDouble() ?? 0.0;
   }
 
+  Future<void> clearCart(int userId) async {
+    final db = await database;
+    await db.delete(
+      'cart',
+      where: 'user_id = ?',
+      whereArgs: [userId],
+    );
+  }
+
   // Insert payment information
   Future<void> insertPayment(int userId, String cardNumber, String expiryDate, String cvv) async {
     final db = await database;
