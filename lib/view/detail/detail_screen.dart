@@ -8,10 +8,10 @@ class DetailScreen extends StatefulWidget {
   final ShoeModel model;
   final bool isComeFromMoreSection;
   
-  DetailScreen({
+  const DetailScreen({Key? key, 
     required this.model,
     required this.isComeFromMoreSection,
-  });
+  }) : super(key: key);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -28,7 +28,6 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Future<void> _checkFavoriteStatus() async {
-    // TODO: Replace with actual logged-in user ID
     final isInFavorites = await dbHelper.isFavorite(1, widget.model.id);
     if (mounted) {
       setState(() {
@@ -38,8 +37,7 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Future<void> _toggleFavorite() async {
-    // TODO: Replace with actual logged-in user ID
-    final userId = 1;
+    const userId = 1;
     
     if (isFavorite) {
       await dbHelper.removeFavorite(userId, widget.model.id);
@@ -57,7 +55,7 @@ class _DetailScreenState extends State<DetailScreen> {
           content: Text(isFavorite ? 'Added to favorites' : 'Removed from favorites'),
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.black87,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }
@@ -77,7 +75,7 @@ class _DetailScreenState extends State<DetailScreen> {
             centerTitle: true,
             title: Text(
               widget.model.name,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -87,7 +85,7 @@ class _DetailScreenState extends State<DetailScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black87,
               ),

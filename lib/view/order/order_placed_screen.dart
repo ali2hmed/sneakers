@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sneakers_app/theme/custom_app_theme.dart';
 import 'package:sneakers_app/utils/constants.dart';
 import 'package:sneakers_app/view/navigator.dart';
 
@@ -15,11 +14,12 @@ class OrderPlacedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         // Navigate to home screen when back button is pressed
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => MainNavigator()),
+          MaterialPageRoute(builder: (context) => const MainNavigator()),
           (route) => false,
         );
         return false;
@@ -73,13 +73,13 @@ class OrderPlacedScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 48),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => MainNavigator()),
+                        MaterialPageRoute(builder: (context) => const MainNavigator()),
                         (route) => false,
                       );
                     },
@@ -102,7 +102,6 @@ class OrderPlacedScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {
-                    // TODO: Navigate to order tracking screen
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Order tracking coming soon!'),

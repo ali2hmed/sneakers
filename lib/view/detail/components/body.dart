@@ -1,37 +1,35 @@
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../animation/fadeanimation.dart';
 import '../../../../../utils/app_methods.dart';
 import '../../../../../utils/constants.dart';
 import '../../../../../models/shoe_model.dart';
-import '../../../data/dummy_data.dart';
 import '../../../models/models.dart';
 import '../../../theme/custom_app_theme.dart';
 
+// ignore: must_be_immutable
 class DetailsBody extends StatefulWidget {
   ShoeModel model;
   bool isComeFromMoreSection;
-  DetailsBody({required this.model, required this.isComeFromMoreSection});
+  DetailsBody({Key? key, required this.model, required this.isComeFromMoreSection}) : super(key: key);
 
   @override
   Details createState() => Details();
 }
 
 class Details extends State<DetailsBody> {
-  bool _isSelectedCountry = false;
   int? _isSelectedSize;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    return Container(
+    return SizedBox(
       width: width,
       height: height * 1.1,
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             topInformationWidget(width, height),
@@ -39,12 +37,12 @@ class Details extends State<DetailsBody> {
             SizedBox(
               height: 20,
               width: width / 1.1,
-              child: Divider(
+              child: const Divider(
                 thickness: 1.4,
                 color: Colors.grey,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
@@ -52,21 +50,21 @@ class Details extends State<DetailsBody> {
               child: Column(
                 children: [
                   nameAndPrice(),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   shoeInfo(width, height),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   sizeTextAndCountry(width, height),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   endSizesAndButton(width, height),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   materialButton(width, height),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
@@ -80,7 +78,7 @@ class Details extends State<DetailsBody> {
 
   // Top information Widget Components
   topInformationWidget(width, height) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height / 2.3,
       child: Stack(
@@ -95,7 +93,7 @@ class Details extends State<DetailsBody> {
                 height: height / 2.2,
                 decoration: BoxDecoration(
                   color: widget.model.modelColor,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(1500),
                     bottomRight: Radius.circular(100),
                   ),
@@ -111,8 +109,8 @@ class Details extends State<DetailsBody> {
                   ? widget.model.model
                   : widget.model.imgAddress,
               child: RotationTransition(
-                turns: AlwaysStoppedAnimation(-25 / 360),
-                child: Container(
+                turns: const AlwaysStoppedAnimation(-25 / 360),
+                child: SizedBox(
                   width: width / 1.3,
                   height: height / 4.3,
                   child: Image(image: AssetImage(widget.model.imgAddress)),
@@ -128,7 +126,7 @@ class Details extends State<DetailsBody> {
   // Rounded Image Widget About Below method Components
   roundedImage(width, height) {
     return Container(
-      padding: EdgeInsets.all(2),
+      padding: const EdgeInsets.all(2),
       width: width / 5,
       height: height / 14,
       decoration: BoxDecoration(
@@ -146,7 +144,7 @@ class Details extends State<DetailsBody> {
     return FadeAnimation(
       delay: 0.5,
       child: Container(
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         width: width,
         height: height / 11,
         child: Row(
@@ -156,7 +154,7 @@ class Details extends State<DetailsBody> {
             roundedImage(width, height),
             roundedImage(width, height),
             Container(
-              padding: EdgeInsets.all(2),
+              padding: const EdgeInsets.all(2),
               width: width / 5,
               height: height / 14,
               decoration: BoxDecoration(
@@ -169,7 +167,7 @@ class Details extends State<DetailsBody> {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.play_circle_fill,
                   color: AppConstantsColor.lightTextColor,
@@ -187,7 +185,7 @@ class Details extends State<DetailsBody> {
   sizeButton(width, height) {
     return FadeAnimation(
       delay: 2.5,
-      child: Container(
+      child: SizedBox(
         width: width / 4.5,
         height: height / 14,
         child: MaterialButton(
@@ -226,7 +224,7 @@ class Details extends State<DetailsBody> {
   endSizesAndButton(width, height) {
     return FadeAnimation(
       delay: 3,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height / 13,
         child: ListView.builder(
@@ -255,7 +253,7 @@ class Details extends State<DetailsBody> {
         onPressed: () {
           if (_isSelectedSize == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('Please select a size'),
                 behavior: SnackBarBehavior.floating,
                 backgroundColor: Colors.red,
@@ -265,7 +263,7 @@ class Details extends State<DetailsBody> {
           }
           AppMethods.addToCart(widget.model, context);
         },
-        child: Text(
+        child: const Text(
           "ADD TO BAG",
           style: TextStyle(
             color: AppConstantsColor.lightTextColor,
@@ -281,7 +279,7 @@ class Details extends State<DetailsBody> {
   sizeTextAndCountry(width, height) {
     return FadeAnimation(
       delay: 2.5,
-      child: Row(
+      child: const Row(
         children: [
           Text(
             "Size",
@@ -303,7 +301,7 @@ class Details extends State<DetailsBody> {
   shoeInfo(width, height) {
     return FadeAnimation(
       delay: 1.5,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height / 9,
         child: Text(
@@ -321,7 +319,7 @@ class Details extends State<DetailsBody> {
         children: [
           Text(
             "${widget.model.name} ${widget.model.model}",
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -330,7 +328,7 @@ class Details extends State<DetailsBody> {
           Expanded(child: Container()),
           Text(
             "${widget.model.price.toInt()} IQD",
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppConstantsColor.materialButtonColor,

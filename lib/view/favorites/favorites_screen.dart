@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sneakers_app/db_helper.dart';
 import 'package:sneakers_app/utils/constants.dart';
-import 'package:sneakers_app/theme/custom_app_theme.dart';
 import 'package:sneakers_app/models/shoe_model.dart';
 import 'package:sneakers_app/view/detail/detail_screen.dart';
 
@@ -24,7 +23,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Future<void> _loadFavorites() async {
     try {
-      // TODO: Replace with actual logged-in user ID
       final favorites = await DBHelper().getFavorites(1); // Using ID 1 for testing
       setState(() {
         favoriteItems = favorites;
@@ -71,7 +69,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
+        title: const Text(
           'My Favorites',
           style: TextStyle(
             color: Colors.black87,
@@ -82,7 +80,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         centerTitle: true,
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: AppConstantsColor.materialButtonColor,
               ),
@@ -97,8 +95,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         size: 80,
                         color: AppConstantsColor.materialButtonColor.withOpacity(0.5),
                       ),
-                      SizedBox(height: 24),
-                      Text(
+                      const SizedBox(height: 24),
+                      const Text(
                         'No favorites yet',
                         style: TextStyle(
                           fontSize: 24,
@@ -106,7 +104,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           color: Colors.black87,
                         ),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text(
                         'Add items to your favorites',
                         style: TextStyle(
@@ -118,7 +116,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   ),
                 )
               : ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                   itemCount: favoriteItems.length,
                   itemBuilder: (context, index) {
                     final item = favoriteItems[index];
@@ -126,14 +124,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       key: Key(item['id'].toString()),
                       direction: DismissDirection.endToStart,
                       background: Container(
-                        margin: EdgeInsets.only(bottom: 16),
+                        margin: const EdgeInsets.only(bottom: 16),
                         decoration: BoxDecoration(
                           color: Colors.red[400],
                           borderRadius: BorderRadius.circular(15),
                         ),
                         alignment: Alignment.centerRight,
-                        padding: EdgeInsets.only(right: 20),
-                        child: Icon(Icons.delete_outline, color: Colors.white, size: 28),
+                        padding: const EdgeInsets.only(right: 20),
+                        child: const Icon(Icons.delete_outline, color: Colors.white, size: 28),
                       ),
                       onDismissed: (direction) async {
                         await DBHelper().removeFavorite(1, item['id']);
@@ -141,7 +139,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                           favoriteItems.removeAt(index);
                         });
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text('Item removed from favorites'),
                             behavior: SnackBarBehavior.floating,
                             backgroundColor: Colors.black87,
@@ -151,7 +149,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       child: GestureDetector(
                         onTap: () => _navigateToDetail(item),
                         child: Container(
-                          margin: EdgeInsets.only(bottom: 16),
+                          margin: const EdgeInsets.only(bottom: 16),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
@@ -159,7 +157,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.1),
                                 blurRadius: 10,
-                                offset: Offset(0, 5),
+                                offset: const Offset(0, 5),
                               ),
                             ],
                           ),
@@ -168,7 +166,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               Container(
                                 width: 120,
                                 height: 120,
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 child: Hero(
                                   tag: item['image'],
                                   child: Image.asset(
@@ -179,19 +177,19 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         item['name'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black87,
                                         ),
                                       ),
-                                      SizedBox(height: 8),
+                                      const SizedBox(height: 8),
                                       Text(
                                         item['model'],
                                         style: TextStyle(
@@ -199,10 +197,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                           color: Colors.grey[600],
                                         ),
                                       ),
-                                      SizedBox(height: 8),
+                                      const SizedBox(height: 8),
                                       Text(
                                         '${item['price'].toInt()} IQD',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: AppConstantsColor.materialButtonColor,
@@ -213,7 +211,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.grey[400],

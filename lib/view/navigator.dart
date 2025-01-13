@@ -8,19 +8,21 @@ import 'package:sneakers_app/view/profile/profile_screen.dart';
 import 'package:sneakers_app/view/favorites/favorites_screen.dart';
 
 class MainNavigator extends StatefulWidget {
+  const MainNavigator({Key? key}) : super(key: key);
+
   @override
   _MainNavigatorState createState() => _MainNavigatorState();
 }
 
 class _MainNavigatorState extends State<MainNavigator> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   int _selectedIndex = 0;
-  List<Widget> _screen = [
-    HomeScreen(),
-    MyBagScreen(),
-    FavoritesScreen(),
-    Profile(),
+  final List<Widget> _screen = [
+    const HomeScreen(),
+    const MyBagScreen(),
+    const FavoritesScreen(),
+    const Profile(),
   ];
 
   void _onPageChanged(int index) {
@@ -46,7 +48,7 @@ class _MainNavigatorState extends State<MainNavigator> {
         controller: _pageController,
         children: _screen,
         onPageChanged: _onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: CustomNavigationBar(
         iconSize: 27.0,
@@ -58,16 +60,16 @@ class _MainNavigatorState extends State<MainNavigator> {
         scaleFactor: 0.1,
         items: [
           CustomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
+            icon: const Icon(CupertinoIcons.home),
           ),
           CustomNavigationBarItem(
-            icon: Icon(CupertinoIcons.shopping_cart),
+            icon: const Icon(CupertinoIcons.shopping_cart),
           ),
           CustomNavigationBarItem(
-            icon: Icon(CupertinoIcons.heart),
+            icon: const Icon(CupertinoIcons.heart),
           ),
           CustomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person),
+            icon: const Icon(CupertinoIcons.person),
           ),
         ],
         onTap: _onItemTapped,

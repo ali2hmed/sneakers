@@ -7,11 +7,11 @@ import '../../../utils/constants.dart';
 
 PreferredSize? customAppBar() {
   return PreferredSize(
-    preferredSize: Size.fromHeight(70),
+    preferredSize: const Size.fromHeight(70),
     child: AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: Padding(
+      title: const Padding(
         padding: EdgeInsets.only(top: 8.0),
         child: Text(
           "Home Page",
@@ -20,9 +20,9 @@ PreferredSize? customAppBar() {
       ),
       actions: [
         Padding(
-          padding: EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.only(top: 8.0),
           child: IconButton(
-            icon: FaIcon(
+            icon: const FaIcon(
               CupertinoIcons.search,
               color: AppConstantsColor.darkTextColor,
               size: 25,
@@ -31,9 +31,9 @@ PreferredSize? customAppBar() {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: 8.0, right: 4),
+          padding: const EdgeInsets.only(top: 8.0, right: 4),
           child: IconButton(
-            icon: FaIcon(
+            icon: const FaIcon(
               CupertinoIcons.bell,
               color: AppConstantsColor.darkTextColor,
               size: 25,

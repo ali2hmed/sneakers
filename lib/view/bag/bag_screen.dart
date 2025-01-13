@@ -21,7 +21,7 @@ class MyBagScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: BagBody(),
+      body: const BagBody(),
     );
   }
 }

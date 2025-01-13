@@ -186,13 +186,13 @@ class SneakersSignInScreen extends StatelessWidget {
                                 onTap: () {
                                   Navigator.pushNamed(context, '/signUp');
                                 },
-                            child: Text(
+                            child: const Text(
                               "Sign Up here",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black, // Black text color
-                                shadows: const [
+                                shadows: [
                                   Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
                                   Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
                                   Shadow(offset: Offset(0.5, 0.5), color: Colors.white),

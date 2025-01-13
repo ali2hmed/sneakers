@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/user_provider.dart';
 import '../../db_helper.dart';
-import '../../theme/custom_app_theme.dart';
 import '../../utils/constants.dart';
 import '../order/order_placed_screen.dart';
 

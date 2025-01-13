@@ -5,10 +5,8 @@ import 'package:sneakers_app/db_helper.dart';
 import 'package:sneakers_app/providers/user_provider.dart';
 
 import '../../../../animation/fadeanimation.dart';
-import '../../../../models/models.dart';
 import '../../../../utils/constants.dart';
 import '../../../../view/profile/widget/repeated_list.dart';
-import '../../../data/dummy_data.dart';
 
 class BodyProfile extends StatefulWidget {
   const BodyProfile({Key? key}) : super(key: key);
@@ -51,15 +49,15 @@ class _BodyProfileState extends State<BodyProfile> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
       width: width,
       height: height,
       child: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
                 topProfilePicAndName(width, height),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 middleDashboard(width, height),
@@ -76,12 +74,12 @@ class _BodyProfileState extends State<BodyProfile> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(
                 "https://avatars.githubusercontent.com/u/91388754?v=4"),
           ),
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           Column(
@@ -91,7 +89,7 @@ class _BodyProfileState extends State<BodyProfile> {
                 userData?['name'] ?? 'Loading...',
                 style: AppThemes.profileDevName,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
@@ -100,12 +98,12 @@ class _BodyProfileState extends State<BodyProfile> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit_outlined,
                 color: Colors.grey,
               ))
@@ -118,20 +116,20 @@ class _BodyProfileState extends State<BodyProfile> {
   middleDashboard(width, height) {
     return FadeAnimation(
       delay: 2,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height / 2.5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "    Dashboard",
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
                   fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             RoundedLisTile(
@@ -147,7 +145,7 @@ class _BodyProfileState extends State<BodyProfile> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.blue[700],
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -178,7 +176,7 @@ class _BodyProfileState extends State<BodyProfile> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -204,7 +202,7 @@ class _BodyProfileState extends State<BodyProfile> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.red[500],
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -236,7 +234,7 @@ class _BodyProfileState extends State<BodyProfile> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_forward_ios,
                   color: AppConstantsColor.darkTextColor,
                   size: 15,
@@ -253,20 +251,20 @@ class _BodyProfileState extends State<BodyProfile> {
   bottomSection(width, height) {
     return FadeAnimation(
       delay: 2.5,
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height / 6.5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "    My Account",
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
                   fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Text(
@@ -276,7 +274,7 @@ class _BodyProfileState extends State<BodyProfile> {
                   color: Colors.blue[600],
                   fontSize: 17),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text(

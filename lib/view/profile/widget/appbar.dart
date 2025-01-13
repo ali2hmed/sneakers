@@ -6,13 +6,12 @@ import '../../../utils/constants.dart';
 
 PreferredSize? customAppBarProfile() {
   return PreferredSize(
-    preferredSize: Size.fromHeight(60),
+    preferredSize: const Size.fromHeight(60),
     child: AppBar(
-     
       centerTitle: true,
       elevation: 0,
       backgroundColor: Colors.transparent,
-      title: Padding(
+      title: const Padding(
         padding: EdgeInsets.only(
           top: 8.0,
         ),

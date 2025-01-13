@@ -1,12 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sneakers_app/db_helper.dart';
 import 'package:sneakers_app/models/shoe_model.dart';
-import 'package:sneakers_app/theme/custom_app_theme.dart';
 import 'package:sneakers_app/utils/constants.dart';
 import 'package:sneakers_app/view/detail/detail_screen.dart';
 import 'package:sneakers_app/view/checkout/checkout_screen.dart';
 
 class BagBody extends StatefulWidget {
+  const BagBody({Key? key}) : super(key: key);
+
   @override
   _BagBodyState createState() => _BagBodyState();
 }
@@ -20,23 +22,31 @@ class _BagBodyState extends State<BagBody> {
   @override
   void initState() {
     super.initState();
-    print('DEBUG: BagBody initState called');
+    if (kDebugMode) {
+      print('DEBUG: BagBody initState called');
+    }
     _loadCartItems();
   }
 
   Future<void> _loadCartItems() async {
     try {
-      print('DEBUG: Loading cart items...');
+      if (kDebugMode) {
+        print('DEBUG: Loading cart items...');
+      }
       setState(() {
         isLoading = true;
-      });
-      
-      // TODO: Replace with actual logged-in user ID
+      }); 
       final items = await dbHelper.getCartItems(1);
       final cartTotal = await dbHelper.getCartTotal(1);
-      print('DEBUG: Found ${items.length} items in cart');
-      print('DEBUG: Cart items: $items');
-      print('DEBUG: Cart total: $cartTotal');
+      if (kDebugMode) {
+        print('DEBUG: Found ${items.length} items in cart');
+      }
+      if (kDebugMode) {
+        print('DEBUG: Cart items: $items');
+      }
+      if (kDebugMode) {
+        print('DEBUG: Cart total: $cartTotal');
+      }
       
       if (mounted) {
         setState(() {
@@ -46,8 +56,12 @@ class _BagBodyState extends State<BagBody> {
         });
       }
     } catch (e, stackTrace) {
-      print('DEBUG: Error loading cart: $e');
-      print('DEBUG: Stack trace: $stackTrace');
+      if (kDebugMode) {
+        print('DEBUG: Error loading cart: $e');
+      }
+      if (kDebugMode) {
+        print('DEBUG: Stack trace: $stackTrace');
+      }
       if (mounted) {
         setState(() {
           isLoading = false;
@@ -97,11 +111,13 @@ class _BagBodyState extends State<BagBody> {
 
   @override
   Widget build(BuildContext context) {
-    print('DEBUG: Building BagBody with ${cartItems.length} items');
+    if (kDebugMode) {
+      print('DEBUG: Building BagBody with ${cartItems.length} items');
+    }
     return RefreshIndicator(
       onRefresh: _loadCartItems,
       child: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: AppConstantsColor.materialButtonColor,
               ),
@@ -116,7 +132,7 @@ class _BagBodyState extends State<BagBody> {
                         size: 80,
                         color: Colors.grey[400],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                         'Your cart is empty',
                         style: TextStyle(
@@ -125,7 +141,7 @@ class _BagBodyState extends State<BagBody> {
                           color: Colors.grey[800],
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         'Add items to start shopping',
                         style: TextStyle(
@@ -140,23 +156,25 @@ class _BagBodyState extends State<BagBody> {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                         itemCount: cartItems.length,
                         itemBuilder: (context, index) {
                           final item = cartItems[index];
-                          print('DEBUG: Building item $index: ${item['name']} ${item['model']}');
+                          if (kDebugMode) {
+                            print('DEBUG: Building item $index: ${item['name']} ${item['model']}');
+                          }
                           return Dismissible(
                             key: Key(item['id'].toString()),
                             direction: DismissDirection.endToStart,
                             background: Container(
-                              margin: EdgeInsets.only(bottom: 16),
+                              margin: const EdgeInsets.only(bottom: 16),
                               decoration: BoxDecoration(
                                 color: Colors.red[400],
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               alignment: Alignment.centerRight,
-                              padding: EdgeInsets.only(right: 20),
-                              child: Icon(Icons.delete_outline, color: Colors.white),
+                              padding: const EdgeInsets.only(right: 20),
+                              child: const Icon(Icons.delete_outline, color: Colors.white),
                             ),
                             onDismissed: (direction) {
                               _removeFromCart(item['id']);
@@ -183,7 +201,7 @@ class _BagBodyState extends State<BagBody> {
                                 );
                               },
                               child: Container(
-                                margin: EdgeInsets.only(bottom: 16),
+                                margin: const EdgeInsets.only(bottom: 16),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(15),
@@ -191,7 +209,7 @@ class _BagBodyState extends State<BagBody> {
                                     BoxShadow(
                                       color: Colors.black.withOpacity(0.1),
                                       blurRadius: 10,
-                                      offset: Offset(0, 5),
+                                      offset: const Offset(0, 5),
                                     ),
                                   ],
                                 ),
@@ -200,7 +218,7 @@ class _BagBodyState extends State<BagBody> {
                                     Container(
                                       width: 120,
                                       height: 120,
-                                      padding: EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       child: Hero(
                                         tag: item['image'],
                                         child: Image.asset(
@@ -211,19 +229,19 @@ class _BagBodyState extends State<BagBody> {
                                     ),
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsets.all(16),
+                                        padding: const EdgeInsets.all(16),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               '${item['name']} ${item['model']}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black87,
                                               ),
                                             ),
-                                            SizedBox(height: 8),
+                                            const SizedBox(height: 8),
                                             Text(
                                               'Size: ${item['size']}',
                                               style: TextStyle(
@@ -231,18 +249,18 @@ class _BagBodyState extends State<BagBody> {
                                                 color: Colors.grey[600],
                                               ),
                                             ),
-                                            SizedBox(height: 8),
+                                            const SizedBox(height: 8),
                                             Row(
                                               children: [
                                                 Text(
                                                   '${(item['price'] * item['quantity']).toInt()} IQD',
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
                                                     color: AppConstantsColor.materialButtonColor,
                                                   ),
                                                 ),
-                                                Spacer(),
+                                                const Spacer(),
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     color: Colors.grey[200],
@@ -251,24 +269,24 @@ class _BagBodyState extends State<BagBody> {
                                                   child: Row(
                                                     children: [
                                                       IconButton(
-                                                        icon: Icon(Icons.remove),
+                                                        icon: const Icon(Icons.remove),
                                                         onPressed: () => _updateQuantity(
                                                           item['id'],
                                                           item['quantity'],
                                                           false,
                                                         ),
                                                         padding: EdgeInsets.zero,
-                                                        constraints: BoxConstraints(
+                                                        constraints: const BoxConstraints(
                                                           minWidth: 32,
                                                           minHeight: 32,
                                                         ),
                                                       ),
-                                                      Container(
+                                                      SizedBox(
                                                         width: 32,
                                                         child: Center(
                                                           child: Text(
                                                             item['quantity'].toString(),
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                               fontSize: 16,
                                                               fontWeight: FontWeight.bold,
                                                             ),
@@ -276,14 +294,14 @@ class _BagBodyState extends State<BagBody> {
                                                         ),
                                                       ),
                                                       IconButton(
-                                                        icon: Icon(Icons.add),
+                                                        icon: const Icon(Icons.add),
                                                         onPressed: () => _updateQuantity(
                                                           item['id'],
                                                           item['quantity'],
                                                           true,
                                                         ),
                                                         padding: EdgeInsets.zero,
-                                                        constraints: BoxConstraints(
+                                                        constraints: const BoxConstraints(
                                                           minWidth: 32,
                                                           minHeight: 32,
                                                         ),
@@ -307,15 +325,15 @@ class _BagBodyState extends State<BagBody> {
                     ),
                     if (cartItems.isNotEmpty)
                       Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
                               blurRadius: 10,
-                              offset: Offset(0, -5),
+                              offset: const Offset(0, -5),
                             ),
                           ],
                         ),
@@ -326,7 +344,7 @@ class _BagBodyState extends State<BagBody> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Total:',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -336,7 +354,7 @@ class _BagBodyState extends State<BagBody> {
                                   ),
                                   Text(
                                     '${total.toInt()} IQD',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                       color: AppConstantsColor.materialButtonColor,
@@ -344,7 +362,7 @@ class _BagBodyState extends State<BagBody> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 20),
+                              const SizedBox(height: 20),
                               MaterialButton(
                                 onPressed: _navigateToCheckout,
                                 shape: RoundedRectangleBorder(
@@ -353,7 +371,7 @@ class _BagBodyState extends State<BagBody> {
                                 minWidth: double.infinity,
                                 height: 50,
                                 color: AppConstantsColor.materialButtonColor,
-                                child: Text(
+                                child: const Text(
                                   'CHECKOUT',
                                   style: TextStyle(
                                     color: Colors.white,

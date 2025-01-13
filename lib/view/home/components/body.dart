@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sneakers_app/data/dummy_data.dart';
 import 'package:sneakers_app/db_helper.dart';
 import 'package:sneakers_app/theme/custom_app_theme.dart';
@@ -48,7 +47,6 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _loadFavoriteStatus() async {
-    // TODO: Replace with actual logged-in user ID
     for (var item in availableShoes) {
       final isFav = await dbHelper.isFavorite(1, item.id);
       if (mounted) {
@@ -60,8 +58,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _toggleFavorite(int shoeId) async {
-    // TODO: Replace with actual logged-in user ID
-    final userId = 1;
+    const userId = 1;
     final isFavorite = favoriteStatus[shoeId] ?? false;
 
     if (isFavorite) {
@@ -84,9 +81,9 @@ class _BodyState extends State<Body> {
     return Column(
       children: [
         topCategoriesWidget(width, height),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         middleCategoriesWidget(width, height),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         moreTextWidget(),
         lastCategoriesWidget(width, height),
       ],
@@ -98,11 +95,11 @@ class _BodyState extends State<Body> {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           width: width,
           height: height / 18,
           child: ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: categories.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, index) {
@@ -133,7 +130,7 @@ class _BodyState extends State<Body> {
 
 // Middle Categories Widget Components
   middleCategoriesWidget(width, height) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height / 2.4,
       child: filteredShoes.isEmpty
@@ -146,7 +143,7 @@ class _BodyState extends State<Body> {
                     size: 60,
                     color: Colors.grey[400],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     'No shoes found',
                     style: TextStyle(
@@ -155,7 +152,7 @@ class _BodyState extends State<Body> {
                       color: Colors.grey[800],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Try selecting a different category',
                     style: TextStyle(
@@ -167,7 +164,7 @@ class _BodyState extends State<Body> {
               ),
             )
           : ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: filteredShoes.length,
               itemBuilder: (ctx, index) {
@@ -185,7 +182,7 @@ class _BodyState extends State<Body> {
                     );
                   },
                   child: Container(
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     width: width / 1.9,
                     child: Stack(
                       children: [
@@ -243,8 +240,8 @@ class _BodyState extends State<Body> {
                             child: Hero(
                               tag: model.imgAddress,
                               child: RotationTransition(
-                                turns: AlwaysStoppedAnimation(-30 / 360),
-                                child: Container(
+                                turns: const AlwaysStoppedAnimation(-30 / 360),
+                                child: SizedBox(
                                   width: 280,
                                   height: 260,
                                   child: Image(
@@ -260,7 +257,7 @@ class _BodyState extends State<Body> {
                           right: 10,
                           child: IconButton(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               CupertinoIcons.arrow_right_circle,
                               color: Colors.white,
                               size: 25,
@@ -279,14 +276,14 @@ class _BodyState extends State<Body> {
 // More Text Widget Components
   moreTextWidget() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Text("More", style: AppThemes.homeMoreText),
+          const Text("More", style: AppThemes.homeMoreText),
           Expanded(child: Container()),
           IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_right,
                 size: 27,
               ))
@@ -297,11 +294,11 @@ class _BodyState extends State<Body> {
 
 // Last Categories Widget Components
   lastCategoriesWidget(width, height) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height / 4,
       child: ListView.builder(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: availableShoes.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (ctx, index) {
@@ -319,8 +316,8 @@ class _BodyState extends State<Body> {
                 );
               },
               child: Container(
-                padding: EdgeInsets.all(0),
-                margin: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(0),
+                margin: const EdgeInsets.all(10),
                 width: width / 2.24,
                 height: height / 4.3,
                 decoration: BoxDecoration(
@@ -345,7 +342,7 @@ class _BodyState extends State<Body> {
                               child: Center(
                                   child: FadeAnimation(
                                 delay: 1.5,
-                                child: Text("NEW",
+                                child: const Text("NEW",
                                     style: AppThemes.homeGridNewText),
                               ))),
                         ),
@@ -369,8 +366,8 @@ class _BodyState extends State<Body> {
                       child: FadeAnimation(
                         delay: 1.5,
                         child: RotationTransition(
-                          turns: AlwaysStoppedAnimation(-15 / 360),
-                          child: Container(
+                          turns: const AlwaysStoppedAnimation(-15 / 360),
+                          child: SizedBox(
                             width: width / 3,
                             height: height / 7,
                             child: Hero(
@@ -387,7 +384,7 @@ class _BodyState extends State<Body> {
                       children: [
                         FadeAnimation(
                           delay: 2,
-                          child: Container(
+                          child: SizedBox(
                             width: width / 2,
                             height: height / 42,
                             child: FittedBox(
@@ -398,7 +395,7 @@ class _BodyState extends State<Body> {
                         ),
                         FadeAnimation(
                           delay: 2.2,
-                          child: Container(
+                          child: SizedBox(
                             width: width / 4,
                             height: height / 42,
                             child: FittedBox(
