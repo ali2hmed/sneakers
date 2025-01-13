@@ -235,7 +235,7 @@ class Details extends State<DetailsBody> {
           itemBuilder: (ctx, index) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: sizeButton((index + 35) * 10, height),  // Sizes from 35 to 42
+              child: sizeButton((index + 38) * 10, height),  // Sizes from 38 to 45
             );
           },
         ),
