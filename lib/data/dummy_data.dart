@@ -3,77 +3,77 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 
 final List<ShoeModel> availableShoes = [
-  ShoeModel(
-    id: 1,
-    name: "NIKE",
-    model: "AIR-MAX",
-    price: 130000,
-    imgAddress: "assets/images/nike1.png",
-    modelColor: const Color(0xffDE0106),
-  ),
-  ShoeModel(
-    id: 2,
-    name: "NIKE",
-    model: "AIR-JORDAN MID",
-    price: 190000,
-    imgAddress: "assets/images/nike8.png",
-    modelColor: const Color(0xff3F7943),
-  ),
-  ShoeModel(
-    id: 3,
-    name: "NIKE",
-    model: "ZOOM",
-    price: 160000,
-    imgAddress: "assets/images/nike2.png",
-    modelColor: const Color(0xffE66863),
-  ),
-  ShoeModel(
-    id: 4,
-    name: "NIKE",
-    model: "Air-FORCE",
-    price: 110000,
-    imgAddress: "assets/images/nike3.png",
-    modelColor: const Color(0xffD7D8DC),
-  ),
-  ShoeModel(
-    id: 5,
-    name: "NIKE",
-    model: "AIR-JORDAN LOW",
-    price: 150000,
-    imgAddress: "assets/images/nike5.png",
-    modelColor: const Color(0xff37376B),
-  ),
-  ShoeModel(
-    id: 6,
-    name: "NIKE",
-    model: "ZOOM",
-    price: 115000,
-    imgAddress: "assets/images/nike4.png",
-    modelColor: const Color(0xffE4E3E8),
-  ),
-  ShoeModel(
-    id: 7,
-    name: "NIKE",
-    model: "AIR-JORDAN LOW",
-    price: 150000,
-    imgAddress: "assets/images/nike6.png",
-    modelColor: const Color(0xff8C001A),
-  ),
-  ShoeModel(
-    id: 8,
-    name: "NIKE",
-    model: "ZOOM",
-    price: 175000,
-    imgAddress: "assets/images/nike7.png",
-    modelColor: const Color(0x0ff4d4d4),
-  ),
-  ShoeModel(
+ShoeModel(
+  id: 1,
+  name: "NIKE",
+  model: "AIR-MAX",
+  price: 130000,
+  imgAddress: "assets/images/nike1.png",
+  modelColor: const Color(0xFFEF5350), // Soft red
+),
+ShoeModel(
+  id: 2,
+  name: "NIKE",
+  model: "AIR-JORDAN MID",
+  price: 190000,
+  imgAddress: "assets/images/nike8.png",
+  modelColor: const Color(0xFF66BB6A), // Fresh green
+),
+ShoeModel(
+  id: 3,
+  name: "NIKE",
+  model: "ZOOM",
+  price: 160000,
+  imgAddress: "assets/images/nike2.png",
+  modelColor: const Color(0xFFFFA726), // Bright orange
+),
+ShoeModel(
+  id: 4,
+  name: "NIKE",
+  model: "Air-FORCE",
+  price: 110000,
+  imgAddress: "assets/images/nike3.png",
+  modelColor: const Color(0xFFB0BEC5), // Light grey-blue
+),
+ShoeModel(
+  id: 5,
+  name: "NIKE",
+  model: "AIR-JORDAN LOW",
+  price: 150000,
+  imgAddress: "assets/images/nike5.png",
+  modelColor: const Color(0xFF5C6BC0), // Indigo
+),
+ShoeModel(
+  id: 6,
+  name: "NIKE",
+  model: "ZOOM",
+  price: 115000,
+  imgAddress: "assets/images/nike4.png",
+  modelColor: const Color(0xFFECEFF1), // Pale silver
+),
+ShoeModel(
+  id: 7,
+  name: "NIKE",
+  model: "AIR-JORDAN LOW",
+  price: 150000,
+  imgAddress: "assets/images/nike6.png",
+  modelColor: const Color(0xFFD81B60), // Hot pink
+),
+ShoeModel(
+  id: 8,
+  name: "NIKE",
+  model: "ZOOM",
+  price: 175000,
+  imgAddress: "assets/images/nike7.png",
+  modelColor: const Color.fromARGB(255, 72, 175, 226), // Cool grey-blue
+),
+ShoeModel(
   id: 9,
   name: "Adidas",
   model: "Ultraboost 22",
   price: 200000,
   imgAddress: "assets/images/adidas_ultraboost22.png",
-  modelColor: const Color(0xFF1E88E5),
+  modelColor: const Color(0xFF64B5F6), // Sky blue
 ),
 ShoeModel(
   id: 10,
@@ -81,7 +81,7 @@ ShoeModel(
   model: "NMD_R1",
   price: 180000,
   imgAddress: "assets/images/adidas_nmd_r1.png",
-  modelColor: const Color(0xFFE53935),
+  modelColor: const Color(0xFFF06292), // Light pink
 ),
 ShoeModel(
   id: 11,
@@ -89,7 +89,7 @@ ShoeModel(
   model: "Stan Smith",
   price: 150000,
   imgAddress: "assets/images/adidas_stan_smith.png",
-  modelColor: const Color(0xFF43A047),
+  modelColor: const Color(0xFF81C784), // Soft green
 ),
 ShoeModel(
   id: 12,
@@ -97,7 +97,7 @@ ShoeModel(
   model: "Superstar",
   price: 140000,
   imgAddress: "assets/images/adidas_superstar.png",
-  modelColor: const Color(0xFFFB8C00),
+  modelColor: const Color(0xFFFFD54F), // Golden yellow
 ),
 ShoeModel(
   id: 13,
@@ -105,7 +105,7 @@ ShoeModel(
   model: "Gazelle",
   price: 130000,
   imgAddress: "assets/images/adidas_gazelle.png",
-  modelColor: const Color(0xFF8E24AA),
+  modelColor: const Color(0xFFBA68C8), // Purple
 ),
 ShoeModel(
   id: 14,
@@ -113,7 +113,7 @@ ShoeModel(
   model: "Puma RS-X",
   price: 180000,
   imgAddress: "assets/images/puma_rsx.png",
-  modelColor: const Color(0xFF43A047),
+  modelColor: const Color(0xFF4FC3F7), // Light blue
 ),
 ShoeModel(
   id: 15,
@@ -121,7 +121,7 @@ ShoeModel(
   model: "Puma Future Rider",
   price: 170000,
   imgAddress: "assets/images/puma_future_rider.png",
-  modelColor: const Color(0xFFD81B60),
+  modelColor: const Color(0xFFE57373), // Light red
 ),
 ShoeModel(
   id: 16,
@@ -129,7 +129,7 @@ ShoeModel(
   model: "Gucci Ace",
   price: 500000,
   imgAddress: "assets/images/gucci_ace.png",
-  modelColor: const Color.fromARGB(255, 29, 26, 26),
+  modelColor: const Color(0xFFBDBDBD), // Cool grey
 ),
 ShoeModel(
   id: 17,
@@ -137,7 +137,7 @@ ShoeModel(
   model: "Gucci Rhyton",
   price: 480000,
   imgAddress: "assets/images/gucci_rhyton.png",
-  modelColor: const Color.fromARGB(255, 151, 69, 69),
+  modelColor: const Color(0xFFFFA000), // Amber
 ),
 ShoeModel(
   id: 18,
@@ -145,7 +145,7 @@ ShoeModel(
   model: "Old Skool",
   price: 120000,
   imgAddress: "assets/images/vans_old_skool.png",
-  modelColor: const Color.fromARGB(255, 216, 60, 156),
+  modelColor: const Color(0xFF7986CB), // Muted purple
 ),
 ShoeModel(
   id: 19,
@@ -153,7 +153,7 @@ ShoeModel(
   model: "Sk8-Hi",
   price: 130000,
   imgAddress: "assets/images/vans_sk8_hi.png",
-  modelColor: const Color(0xFF005BBB),
+  modelColor: const Color(0xFF90CAF9), // Baby blue
 ),
 ShoeModel(
   id: 20,
@@ -161,7 +161,7 @@ ShoeModel(
   model: "574 Classic",
   price: 140000,
   imgAddress: "assets/images/new_balance_574.png",
-  modelColor: const Color.fromARGB(255, 124, 206, 91),
+  modelColor: const Color(0xFF66BB6A), // Soft green
 ),
 ShoeModel(
   id: 21,
@@ -169,7 +169,7 @@ ShoeModel(
   model: "990v5",
   price: 210000,
   imgAddress: "assets/images/new_balance_990v5.png",
-  modelColor: const Color(0xFF1D3557),
+  modelColor: const Color(0xFF546E7A), // Slate grey
 ),
 ShoeModel(
   id: 22,
@@ -177,7 +177,7 @@ ShoeModel(
   model: "Club C 85",
   price: 125000,
   imgAddress: "assets/images/reebok_club_c_85.png",
-  modelColor: const Color.fromARGB(255, 146, 144, 38),
+  modelColor: const Color(0xFFF9A825), // Golden yellow
 ),
 ShoeModel(
   id: 23,
@@ -185,7 +185,7 @@ ShoeModel(
   model: "Nano X1",
   price: 160000,
   imgAddress: "assets/images/reebok_nano_x1.png",
-  modelColor: const Color(0xFF6A1B9A),
+  modelColor: const Color(0xFF9575CD), // Light purple
 ),
 
 ];
