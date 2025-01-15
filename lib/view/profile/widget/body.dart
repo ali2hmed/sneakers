@@ -265,24 +265,20 @@ class _BodyProfileState extends State<BodyProfile> {
                   fontSize: 15),
             ),
             const SizedBox(
-              height: 15,
-            ),
-            Text(
-              "    Switch to Other Account",
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.blue[600],
-                  fontSize: 17),
-            ),
-            const SizedBox(
               height: 40,
             ),
-            Text(
-              "    Log Out",
-              style: TextStyle(
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/signIn');
+              },
+              child: Text(
+                "    Log Out",
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.red[500],
-                  fontSize: 18),
+                  fontSize: 18,
+                ),
+              ),
             ),
           ],
         ),
