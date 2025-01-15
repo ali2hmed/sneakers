@@ -49,7 +49,7 @@ ShoeModel(
   model: "ZOOM",
   price: 115000,
   imgAddress: "assets/images/nike4.png",
-  modelColor: const Color(0xFFECEFF1), // Pale silver
+  modelColor: const Color.fromARGB(255, 231, 217, 85), // Pale silver
 ),
 ShoeModel(
   id: 7,
@@ -65,7 +65,7 @@ ShoeModel(
   model: "ZOOM",
   price: 175000,
   imgAddress: "assets/images/nike7.png",
-  modelColor: const Color.fromARGB(255, 72, 175, 226), // Cool grey-blue
+  modelColor: const Color.fromARGB(255, 48, 96, 121), // Cool grey-blue
 ),
 ShoeModel(
   id: 9,
