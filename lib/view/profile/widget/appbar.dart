@@ -11,6 +11,7 @@ PreferredSize? customAppBarProfile() {
       centerTitle: true,
       elevation: 0,
       backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: false, // Disable the back arrow
       title: const Padding(
         padding: EdgeInsets.only(
           top: 8.0,

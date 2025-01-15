@@ -11,6 +11,7 @@ PreferredSize? customAppBar() {
     child: AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
+      automaticallyImplyLeading: false, // Disable the back arrow
       title: const Padding(
         padding: EdgeInsets.only(top: 8.0),
         child: Text(

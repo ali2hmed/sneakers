@@ -11,6 +11,7 @@ class MyBagScreen extends StatelessWidget {
       backgroundColor: AppConstantsColor.backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false, // Disable the back arrow
         elevation: 0,
         title: const Text(
           'My Cart',
