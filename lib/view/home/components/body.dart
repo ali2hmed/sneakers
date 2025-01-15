@@ -252,18 +252,6 @@ class _BodyState extends State<Body> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          bottom: 10,
-                          right: 10,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              CupertinoIcons.arrow_right_circle,
-                              color: Colors.white,
-                              size: 25,
-                            ),
-                          )
-                        )
                       ],
                     ),
                   ),
