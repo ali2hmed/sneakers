@@ -201,7 +201,7 @@ class _BodyState extends State<Body> {
                               favoriteStatus[model.id] ?? false
                                 ? Icons.favorite
                                 : Icons.favorite_border,
-                                color: Colors.red,
+                                color: Colors.white,
                           ),
                             onPressed: () => _toggleFavorite(model.id),
                           ),
