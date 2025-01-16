@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../db_helper.dart';
 import '../providers/user_provider.dart';
 
@@ -21,14 +22,12 @@ class SneakersSignInScreen extends StatelessWidget {
       return;
     }
 
-    // Fetch the user by email and password
     final user = await _dbHelper.getUser(email, password);
 
     if (user != null) {
-      // Set the user in the provider
       await Provider.of<UserProvider>(context, listen: false)
           .setUser(user['id'], user['name']);
-          
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Welcome, ${user['name']}')),
       );
@@ -46,7 +45,7 @@ class SneakersSignInScreen extends StatelessWidget {
     FontWeight fontWeight = FontWeight.bold,
     Color textColor = Colors.white,
   }) {
-    return TextStyle(
+    return GoogleFonts.lato(
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: textColor,
@@ -67,30 +66,41 @@ class SneakersSignInScreen extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage('assets/images/splash_background.jpg'),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black54,
+              BlendMode.darken,
+            ),
           ),
         ),
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24), // Adjusted padding
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 80),
-                // Title
+                const SizedBox(height: 5),
+                // Logo and Title
                 Center(
-                  child: Text(
-                    'Sneakers',
-                    style: strokeTextStyle(fontSize: 42),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    'Special footwear for everyday use',
-                    style: strokeTextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/logo.png', // Add your logo here
+                        height: 150,
+                      ),
+                      const SizedBox(height:2),
+                      Text(
+                        'Sneakers',
+                        style: strokeTextStyle(fontSize: 44),
+                      ),
+                      Text(
+                        'Special footwear for everyday use',
+                        style: strokeTextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -129,7 +139,9 @@ class SneakersSignInScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: Add Forgot Password functionality
+                    },
                     child: Text(
                       'Forgot Password?',
                       style: strokeTextStyle(
@@ -141,21 +153,26 @@ class SneakersSignInScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 // Sign In Button
-                ElevatedButton(
-                  onPressed: () => _loginUser(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  child: ElevatedButton(
+                    onPressed: () => _loginUser(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      minimumSize: const Size(double.infinity, 50),
+                      shadowColor: Colors.white.withOpacity(0.5),
                     ),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -171,38 +188,35 @@ class SneakersSignInScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 // Sign Up Link
-// Sign In Link
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Don't have an account? ",
-                                style: strokeTextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, '/signUp');
-                                },
-                            child: const Text(
-                              "Sign Up here",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black, // Black text color
-                                shadows: [
-                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
-                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
-                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
-                                  Shadow(offset: Offset(0.5, 0.5), color: Colors.white),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account? ",
+                      style: strokeTextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
                       ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signUp');
+                      },
+                      child: const Text(
+                        "Sign Up here",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.redAccent,
+                          shadows: [
+                            Shadow(offset: Offset(0.5, 0.5), color: Colors.black),
+                            Shadow(offset: Offset(0.5, 0.5), color: Colors.black),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 50),
               ],
             ),
@@ -212,18 +226,26 @@ class SneakersSignInScreen extends StatelessWidget {
     );
   }
 
-  // Social Media Button
+  // Social Media Button with hover effect
   Widget _socialButton(String assetPath) {
-    return Container(
-      height: 50,
-      width: 50,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Image.asset(assetPath, fit: BoxFit.contain),
+    return GestureDetector(
+      onTap: () {
+        // TODO: Add social media login functionality
+      },
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Container(
+          height: 50,
+          width: 50,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(assetPath, fit: BoxFit.contain),
+          ),
+        ),
       ),
     );
   }

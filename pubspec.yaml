@@ -23,6 +23,7 @@ dependencies:
   custom_navigation_bar: ^0.8.2
   simple_animations: ^4.0.1
   supercharged: ^2.1.1
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +36,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/logo.png
     - assets/images/splash_background.jpg
     - assets/images/sign_in_background.jpg
     - assets/icons/apple.png
