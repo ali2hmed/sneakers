@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sneakers_app/db_helper.dart';
 import 'package:sneakers_app/providers/user_provider.dart';
 import 'package:sneakers_app/view/navigator.dart';
+import 'package:sneakers_app/view/admin_page.dart';
 import 'view/splash_screen.dart';
 import 'view/sign_in_screen.dart';
 import 'view/sign_up_screen.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         '/signIn': (context) => SneakersSignInScreen(),
         '/signUp': (context) => SneakersSignUpScreen(),
         '/home': (context) => const MainNavigator(),
-      
+        '/admin': (context) => const AdminDashboardScreen(),
       },
     );
   }

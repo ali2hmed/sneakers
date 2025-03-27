@@ -23,30 +23,33 @@ class ShoeModel {
     this.selectedSize,
   });
 
+  // Convert to a format suitable for SQLite storage
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
       'model': model,
       'price': price,
-      'image': imgAddress,
+      'image': imgAddress, // 🔥 Fix field name to match DB
       'description': description,
       'category': category,
       'selectedSize': selectedSize,
+      'modelColor': modelColor.value, // 🔥 Store as int
     };
   }
 
+  // Convert from database map to ShoeModel
   factory ShoeModel.fromMap(Map<String, dynamic> map) {
     return ShoeModel(
       id: map['id'],
       name: map['name'],
-      model: map['model'],
-      price: map['price'],
-      imgAddress: map['image'],
-      modelColor: Colors.grey,
+      model: map['model'] ?? '',
+      price: (map['price'] as num).toDouble(),
+      imgAddress: map['image'], // 🔥 Fix field name
+      modelColor: Color(map['modelColor'] ?? 0xFF808080), // 🔥 Convert back to Color
       description: map['description'],
       category: map['category'],
-      selectedSize: map['selectedSize']?.toDouble(),
+      selectedSize: (map['selectedSize'] as num?)?.toDouble(),
     );
   }
 }

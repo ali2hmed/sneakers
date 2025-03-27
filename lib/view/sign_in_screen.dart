@@ -31,7 +31,13 @@ class SneakersSignInScreen extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Welcome, ${user['name']}')),
       );
-      Navigator.pushNamed(context, '/home');
+
+      // Redirect admin to the admin panel
+      if (email == 'admin@sneakers.com') {
+        Navigator.pushNamed(context, '/admin');
+      } else {
+        Navigator.pushNamed(context, '/home');
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Invalid email or password')),
@@ -39,7 +45,6 @@ class SneakersSignInScreen extends StatelessWidget {
     }
   }
 
-  // TextStyle with stroke (for headings)
   TextStyle strokeTextStyle({
     double fontSize = 32,
     FontWeight fontWeight = FontWeight.bold,
@@ -80,31 +85,23 @@ class SneakersSignInScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 5),
-                // Logo and Title
                 Center(
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/logo.png', // Add your logo here
+                        'assets/images/logo.png',
                         height: 150,
                       ),
-                      const SizedBox(height:2),
-                      Text(
-                        'Sneakers',
-                        style: strokeTextStyle(fontSize: 44),
-                      ),
+                      const SizedBox(height: 2),
+                      Text('Sneakers', style: strokeTextStyle(fontSize: 44)),
                       Text(
                         'Special footwear for everyday use',
-                        style: strokeTextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: strokeTextStyle(fontSize: 22, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 40),
-                // Email Input
                 TextField(
                   controller: _emailController,
                   decoration: InputDecoration(
@@ -119,7 +116,6 @@ class SneakersSignInScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Password Input
                 TextField(
                   controller: _passwordController,
                   obscureText: true,
@@ -135,24 +131,14 @@ class SneakersSignInScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                // Forgot Password
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () {
-                      // TODO: Add Forgot Password functionality
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: strokeTextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    onPressed: () {},
+                    child: Text('Forgot Password?', style: strokeTextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Sign In Button
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOut,
@@ -168,16 +154,11 @@ class SneakersSignInScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       'Sign In',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Social Media Buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -187,16 +168,12 @@ class SneakersSignInScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                // Sign Up Link
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Don't have an account? ",
-                      style: strokeTextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: strokeTextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -226,12 +203,9 @@ class SneakersSignInScreen extends StatelessWidget {
     );
   }
 
-  // Social Media Button with hover effect
   Widget _socialButton(String assetPath) {
     return GestureDetector(
-      onTap: () {
-        // TODO: Add social media login functionality
-      },
+      onTap: () {},
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Container(

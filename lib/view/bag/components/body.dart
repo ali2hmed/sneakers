@@ -19,6 +19,10 @@ class _BagBodyState extends State<BagBody> {
   bool isLoading = true;
   double total = 0.0;
 
+  // Define userId and shoeId here
+  int userId = 1; // Set this to the current user's ID
+  int shoeId = 0; // Set this to the appropriate shoe ID if needed
+
   @override
   void initState() {
     super.initState();
@@ -36,8 +40,8 @@ class _BagBodyState extends State<BagBody> {
       setState(() {
         isLoading = true;
       }); 
-      final items = await dbHelper.getCartItems(1);
-      final cartTotal = await dbHelper.getCartTotal(1);
+      final items = await dbHelper.getCartItems(userId);
+      final cartTotal = await dbHelper.getCartTotal(userId);
       if (kDebugMode) {
         print('DEBUG: Found ${items.length} items in cart');
       }
@@ -75,7 +79,7 @@ class _BagBodyState extends State<BagBody> {
 
   Future<void> _removeFromCart(int cartId) async {
     try {
-      await dbHelper.removeFromCart(cartId);
+      await dbHelper.removeFromCart(userId, cartId);
       _loadCartItems(); // Reload cart items after removal
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

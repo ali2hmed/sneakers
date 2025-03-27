@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:sneakers_app/data/dummy_data.dart';
 import 'package:sneakers_app/db_helper.dart';
 import 'package:sneakers_app/theme/custom_app_theme.dart';
 import 'package:sneakers_app/utils/constants.dart';
 import 'package:sneakers_app/view/detail/detail_screen.dart';
-
 import '../../../../animation/fadeanimation.dart';
 import '../../../../models/models.dart';
 
@@ -21,37 +18,83 @@ class _BodyState extends State<Body> {
   int selectedIndexOfFeatured = 1;
   Map<int, bool> favoriteStatus = {};
   final dbHelper = DBHelper();
+  List<ShoeModel> allShoes = [];
   List<ShoeModel> filteredShoes = [];
+  List<String> categories = ["All"]; // Start with "All" as default
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadFavoriteStatus();
-    // Initialize with all shoes
-    filteredShoes = List.from(availableShoes);
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      // Load categories first
+      await _loadCategories();
+      // Then load shoes
+      await _loadShoes();
+      // Finally load favorite status
+      await _loadFavoriteStatus();
+    } catch (e) {
+      debugPrint('Error loading data: $e');
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
+  }
+
+  Future<void> _loadCategories() async {
+    try {
+      final dbCategories = await dbHelper.getCategories();
+      debugPrint('Categories loaded: $dbCategories');
+      if (mounted) {
+        setState(() {
+          categories = ["All"]..addAll(dbCategories.where((c) => c != "All"));
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading categories: $e');
+    }
+  }
+
+  Future<void> _loadShoes() async {
+    try {
+      final shoes = await dbHelper.getShoes();
+      debugPrint('Shoes loaded: $shoes');
+      if (mounted) {
+        setState(() {
+          allShoes = shoes;
+          filteredShoes = List.from(allShoes);
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading shoes: $e');
+    }
   }
 
   void _filterShoesByCategory(int index) {
     setState(() {
       selectedIndexOfCategory = index;
       if (index == 0) {
-        // "All" category
-        filteredShoes = List.from(availableShoes);
+        filteredShoes = List.from(allShoes);
       } else {
         final selectedBrand = categories[index];
-        filteredShoes = availableShoes
-            .where((shoe) => shoe.name.toUpperCase() == selectedBrand.toUpperCase())
+        filteredShoes = allShoes
+            .where((shoe) => shoe.name.toUpperCase().contains(selectedBrand.toUpperCase()))
             .toList();
       }
     });
   }
 
   Future<void> _loadFavoriteStatus() async {
-    for (var item in availableShoes) {
-      final isFav = await dbHelper.isFavorite(1, item.id);
+    for (var item in allShoes) {
+      final isFav = await dbHelper.isFavorite(1, item.id ?? 0);
       if (mounted) {
         setState(() {
-          favoriteStatus[item.id] = isFav;
+          favoriteStatus[item.id ?? 0] = isFav;
         });
       }
     }
@@ -61,23 +104,32 @@ class _BodyState extends State<Body> {
     const userId = 1;
     final isFavorite = favoriteStatus[shoeId] ?? false;
 
-    if (isFavorite) {
-      await dbHelper.removeFavorite(userId, shoeId);
-    } else {
-      await dbHelper.addFavorite(userId, shoeId);
-    }
+    try {
+      if (isFavorite) {
+        await dbHelper.removeFavorite(userId, shoeId);
+      } else {
+        await dbHelper.addFavorite(userId, shoeId);
+      }
 
-    if (mounted) {
-      setState(() {
-        favoriteStatus[shoeId] = !isFavorite;
-      });
+      if (mounted) {
+        setState(() {
+          favoriteStatus[shoeId] = !isFavorite;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error toggling favorite: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         topCategoriesWidget(width, height),
@@ -90,8 +142,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-// Top Categories Widget Components
-  topCategoriesWidget(width, height) {
+  Widget topCategoriesWidget(width, height) {
     return Row(
       children: [
         Container(
@@ -99,37 +150,36 @@ class _BodyState extends State<Body> {
           width: width,
           height: height / 18,
           child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: categories.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, index) {
-                return GestureDetector(
-                  onTap: () {
-                    _filterShoesByCategory(index);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      categories[index],
-                      style: TextStyle(
-                          fontSize: selectedIndexOfCategory == index ? 21 : 18,
-                          color: selectedIndexOfCategory == index
-                              ? AppConstantsColor.darkTextColor
-                              : AppConstantsColor.unSelectedTextColor,
-                          fontWeight: selectedIndexOfCategory == index
-                              ? FontWeight.bold
-                              : FontWeight.w400),
+            physics: const BouncingScrollPhysics(),
+            itemCount: categories.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (ctx, index) {
+              return GestureDetector(
+                onTap: () => _filterShoesByCategory(index),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    categories[index],
+                    style: TextStyle(
+                      fontSize: selectedIndexOfCategory == index ? 21 : 18,
+                      color: selectedIndexOfCategory == index
+                          ? AppConstantsColor.darkTextColor
+                          : AppConstantsColor.unSelectedTextColor,
+                      fontWeight: selectedIndexOfCategory == index
+                          ? FontWeight.bold
+                          : FontWeight.w400,
                     ),
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         )
       ],
     );
   }
 
-// Middle Categories Widget Components
-  middleCategoriesWidget(width, height) {
+  Widget middleCategoriesWidget(width, height) {
     return SizedBox(
       width: width,
       height: height / 2.4,
@@ -195,14 +245,14 @@ class _BodyState extends State<Body> {
                         ),
                         Positioned(
                           top: 10,
-                          right: 10, // Move the heart icon to the top-right corner
+                          right: 10,
                           child: IconButton(
                             icon: Icon(
                               favoriteStatus[model.id] ?? false
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                                color: Colors.white,
-                          ),
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.white,
+                            ),
                             onPressed: () => _toggleFavorite(model.id),
                           ),
                         ),
@@ -219,8 +269,7 @@ class _BodyState extends State<Body> {
                           left: 10,
                           child: FadeAnimation(
                             delay: 1.5,
-                            child: Text(model.model,
-                                style: AppThemes.homeProductModel),
+                            child: Text(model.model, style: AppThemes.homeProductModel),
                           ),
                         ),
                         Positioned(
@@ -261,8 +310,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-// More Text Widget Components
-  moreTextWidget() {
+  Widget moreTextWidget() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -270,137 +318,137 @@ class _BodyState extends State<Body> {
           const Text("More", style: AppThemes.homeMoreText),
           Expanded(child: Container()),
           IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_right,
-                size: 27,
-              ))
+            onPressed: () {},
+            icon: const Icon(Icons.arrow_right, size: 27),
+          )
         ],
       ),
     );
   }
 
-// Last Categories Widget Components
-  lastCategoriesWidget(width, height) {
+  Widget lastCategoriesWidget(width, height) {
     return SizedBox(
       width: width,
       height: height / 4,
       child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: availableShoes.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (ctx, index) {
-            ShoeModel model = availableShoes[index];
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (ctx) => DetailScreen(
-                      model: model,
-                      isComeFromMoreSection: true,
+        physics: const BouncingScrollPhysics(),
+        itemCount: allShoes.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (ctx, index) {
+          ShoeModel model = allShoes[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (ctx) => DetailScreen(
+                    model: model,
+                    isComeFromMoreSection: true,
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(0),
+              margin: const EdgeInsets.all(10),
+              width: width / 2.24,
+              height: height / 4.3,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: FadeAnimation(
+                      delay: 1,
+                      child: Container(
+                        width: width / 13,
+                        height: height / 10,
+                        padding: EdgeInsets.zero,
+                        margin: EdgeInsets.zero,
+                        color: Colors.red,
+                        child: RotatedBox(
+                          quarterTurns: -1,
+                          child: Center(
+                            child: FadeAnimation(
+                              delay: 1.5,
+                              child: const Text("NEW", style: AppThemes.homeGridNewText),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.all(0),
-                margin: const EdgeInsets.all(10),
-                width: width / 2.24,
-                height: height / 4.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: FadeAnimation(
-                        delay: 1,
-                        child: Container(
-                          width: width / 13,
-                          height: height / 10,
-                          padding: EdgeInsets.zero,
-                          margin:  EdgeInsets.zero,
-                          color: Colors.red,
-                          child: RotatedBox(
-                              quarterTurns: -1,
-                              child: Center(
-                                  child: FadeAnimation(
-                                delay: 1.5,
-                                child: const Text("NEW",
-                                    style: AppThemes.homeGridNewText),
-                              ))),
-                        ),
+                  Positioned(
+                    right: 1,
+                    child: IconButton(
+                      icon: Icon(
+                        favoriteStatus[model.id] ?? false
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: AppConstantsColor.darkTextColor,
                       ),
+                      onPressed: () => _toggleFavorite(model.id),
                     ),
-                    Positioned(
-                      right: 1,
-                      child: IconButton(
-                        icon: Icon(
-                          favoriteStatus[model.id] ?? false
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: AppConstantsColor.darkTextColor,
-                        ),
-                        onPressed: () => _toggleFavorite(model.id),
-                      ),
-                    ),
-                    Positioned(
-                      top: 26,
-                      left: 25,
-                      child: FadeAnimation(
-                        delay: 1.5,
-                        child: RotationTransition(
-                          turns: const AlwaysStoppedAnimation(-15 / 360),
-                          child: SizedBox(
-                            width: width / 3,
-                            height: height / 7,
-                            child: Hero(
-                              tag: model.model,
-                              child: Image(
-                                image: AssetImage(model.imgAddress),
-                              ),
+                  ),
+                  Positioned(
+                    top: 26,
+                    left: 25,
+                    child: FadeAnimation(
+                      delay: 1.5,
+                      child: RotationTransition(
+                        turns: const AlwaysStoppedAnimation(-15 / 360),
+                        child: SizedBox(
+                          width: width / 3,
+                          height: height / 7,
+                          child: Hero(
+                            tag: model.model,
+                            child: Image(
+                              image: AssetImage(model.imgAddress),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Column(mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FadeAnimation(
-                          delay: 2,
-                          child: SizedBox(
-                            width: width / 2,
-                            height: height / 42,
-                            child: FittedBox(
-                              child: Text("${model.name} ${model.model}",
-                                  style: AppThemes.homeGridNameAndModel),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FadeAnimation(
+                        delay: 2,
+                        child: SizedBox(
+                          width: width / 2,
+                          height: height / 42,
+                          child: FittedBox(
+                            child: Text("${model.name} ${model.model}",
+                                style: AppThemes.homeGridNameAndModel),
+                          ),
+                        ),
+                      ),
+                      FadeAnimation(
+                        delay: 2.2,
+                        child: SizedBox(
+                          width: width / 4,
+                          height: height / 42,
+                          child: FittedBox(
+                            child: Text(
+                              "${model.price.toInt()} IQD",
+                              style: AppThemes.homeGridPrice,
                             ),
                           ),
                         ),
-                        FadeAnimation(
-                          delay: 2.2,
-                          child: SizedBox(
-                            width: width / 4,
-                            height: height / 42,
-                            child: FittedBox(
-                              child: Text(
-                                "${model.price.toInt()} IQD",
-                                style: AppThemes.homeGridPrice
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                      ),
+                    ],
+                  )
+                ],
               ),
-            );
-          }),
+            ),
+          );
+        },
+      ),
     );
   }
 }

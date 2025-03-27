@@ -196,47 +196,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             return null;
           },
         ),
-        const SizedBox(height: 16),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: _expiryController,
-                decoration: InputDecoration(
-                  labelText: 'MM/YY',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                validator: (value) {
-                  if (_selectedPaymentMethod == 1 && (value?.isEmpty ?? true)) {
-                    return 'Required';
-                  }
-                  return null;
-                },
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: TextFormField(
-                controller: _cvvController,
-                decoration: InputDecoration(
-                  labelText: 'CVV',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (_selectedPaymentMethod == 1 && (value?.isEmpty ?? true)) {
-                    return 'Required';
-                  }
-                  return null;
-                },
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }
@@ -316,74 +275,34 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Colors.black
+            color: Colors.black,
           ),
         ),
       ),
     );
   }
 
-  void _handlePlaceOrder() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Show loading indicator
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
+void _handlePlaceOrder() async {
+  if (_formKey.currentState?.validate() ?? false) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final customerName = userProvider.userName ?? 'Guest';
 
-      try {
-        // Get the user ID
-        final userId = Provider.of<UserProvider>(context, listen: false).userId;
-        if (userId == null) {
-          throw Exception('User not logged in');
-        }
+    // Convert orderId to int if needed
+    final orderId = DateTime.now().millisecondsSinceEpoch; // This is now an int
 
-        // Clear the cart
-        await DBHelper().clearCart(userId);
+    await DBHelper().insertOrder(orderId, customerName, widget.totalAmount + 5000);
 
-        // Generate a random order ID (in a real app, this would come from the backend)
-        final orderId = DateTime.now().millisecondsSinceEpoch.toString().substring(5);
-
-        // Close loading dialog
-        Navigator.pop(context);
-
-        // Navigate to order placed screen
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OrderPlacedScreen(
-              orderId: orderId,
-              totalAmount: widget.totalAmount + 5000, // Including delivery fee
-            ),
-          ),
-          (route) => false,
-        );
-      } catch (e) {
-        // Close loading dialog
-        Navigator.pop(context);
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error placing order: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OrderPlacedScreen(
+          orderId: orderId.toString(), // Convert back to String if needed
+          totalAmount: widget.totalAmount + 5000,
+          customerName: customerName,
+        ),
+      ),
+      (route) => false,
+    );
   }
-
-  @override
-  void dispose() {
-    _addressController.dispose();
-    _phoneController.dispose();
-    _cardNumberController.dispose();
-    _expiryController.dispose();
-    _cvvController.dispose();
-    super.dispose();
-  }
+}
 }
