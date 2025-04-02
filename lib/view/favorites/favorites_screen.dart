@@ -23,7 +23,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Future<void> _loadFavorites() async {
     try {
-      final favorites = await DBHelper().getFavorites(1); // Using ID 1 for testing
+      final favorites = await DBHelper().getFavorites(1) ?? []; // Using ID 1 for testing
       setState(() {
         favoriteItems = favorites;
         isLoading = false;
@@ -34,21 +34,21 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         favoriteItems = [];
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading favorites: $e')),
+        SnackBar(content: Text('Error loading favorites: ${e.toString()}')),
       );
     }
   }
 
   void _navigateToDetail(Map<String, dynamic> item) {
     final model = ShoeModel(
-      id: item['id'],
-      name: item['name'],
-      model: item['model'],
-      price: item['price'].toDouble(),
-      imgAddress: item['image'],
-      modelColor: Colors.grey, // You might want to store and retrieve the actual color
-      description: item['description'],
-      category: item['category'],
+      id: item['id'] ?? 0,
+      name: item['name'] ?? 'Unknown',
+      model: item['model'] ?? '',
+      price: (item['price'] ?? 0.0).toDouble(),
+      imgAddress: item['image'] ?? 'assets/images/default_image.png',
+      modelColor: Colors.grey, // Default color
+      description: item['description'] ?? 'No description available',
+      category: item['category'] ?? 'Unknown',
     );
 
     Navigator.push(
@@ -123,7 +123,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     final item = favoriteItems[index];
                     return Dismissible(
                       key: Key(item['id'].toString()),
-                      direction: DismissDirection.endToStart,
+
+direction: DismissDirection.endToStart,
                       background: Container(
                         margin: const EdgeInsets.only(bottom: 16),
                         decoration: BoxDecoration(
@@ -135,7 +136,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                         child: const Icon(Icons.delete_outline, color: Colors.white, size: 28),
                       ),
                       onDismissed: (direction) async {
-                        await DBHelper().removeFavorite(1, item['id']);
+                        await DBHelper().removeFavorite(1, item['id'] ?? 0);
                         setState(() {
                           favoriteItems.removeAt(index);
                         });
@@ -169,9 +170,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                 height: 120,
                                 padding: const EdgeInsets.all(16),
                                 child: Hero(
-                                  tag: item['image'],
+                                  tag: item['image'] ?? '',
                                   child: Image.asset(
-                                    item['image'],
+                                    item['image'] ?? 'assets/images/default_image.png',
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -183,7 +184,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        item['name'],
+                                        item['name'] ?? 'Unknown',
                                         style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
@@ -192,7 +193,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        item['model'],
+                                        item['model'] ?? '',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.grey[600],
@@ -200,8 +201,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        '${item['price'].toInt()} IQD',
-                                        style: const TextStyle(
+                                        '${(item['price'] ?? 0).toInt()} IQD',
+
+style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: AppConstantsColor.materialButtonColor,
